@@ -2,6 +2,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Home from "./pages/Home";
 import { useEffect } from "react";
 import Login from "./pages/Login";
+import Cadastro from "./pages/Cadastro";
 
 export default function App() {
 
@@ -13,6 +14,10 @@ export default function App() {
     {
       path: "/login",
       element: <Login />
+    },
+    {
+      path: "/cadastro",
+      element: <Cadastro />
     }
   ]);
 

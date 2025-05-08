@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-scroll';
+import { Link } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import  Logo  from '../assets/Quiz_logo.png'
 
@@ -36,10 +36,10 @@ const Header = () => {
         </Link>
 
         <nav className="hidden md:flex gap-6 text-gray-800 pr-4">
-          <Link to="" smooth={true} duration={500} className="cursor-pointer hover:text-gray-600 transition">
+          <Link to="/login" className="cursor-pointer hover:text-gray-600 transition">
             Login
           </Link>
-          <Link to="" smooth={true} duration={500} className="cursor-pointer hover:text-gray-600 transition">
+          <Link to="/cadastro" className="cursor-pointer hover:text-gray-600 transition">
             Cadastrar-se
           </Link>
         </nav>
@@ -51,13 +51,13 @@ const Header = () => {
 
       {isOpen && (
         <div className="md:hidden bg-[#faf7ed] flex flex-col items-center gap-4 py-4">
-          <Link to="categorias" smooth={true} duration={500} onClick={closeMenu} className="cursor-pointer hover:text-gray-600 transition">
+          <Link to="categorias" onClick={closeMenu} className="cursor-pointer hover:text-gray-600 transition">
             Categorias
           </Link>
-          <Link to="como-funciona" smooth={true} duration={500} onClick={closeMenu} className="cursor-pointer hover:text-gray-600 transition">
+          <Link to="como-funciona" onClick={closeMenu} className="cursor-pointer hover:text-gray-600 transition">
             Como Funciona
           </Link>
-          <Link to="faq" smooth={true} duration={500} onClick={closeMenu} className="cursor-pointer hover:text-gray-600 transition">
+          <Link to="faq" onClick={closeMenu} className="cursor-pointer hover:text-gray-600 transition">
             FAQ
           </Link>
         </div>

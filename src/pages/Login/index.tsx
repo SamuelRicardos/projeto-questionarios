@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Tela from "../../assets/Mulher_quiz.png";
 
 const Login = () => {
@@ -14,25 +15,25 @@ const Login = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
+            <label className="block text-gray-700 text-sm font-bold mb-2">Senha</label>
             <input
               type="password"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#4a90e2]"
             />
           </div>
           <div className="text-right mb-4">
-            <a href="#" className="text-sm text-gray-500 hover:underline">
+            <Link to="#" className="text-sm text-gray-500 hover:underline">
               Esqueceu a senha?
-            </a>
+            </Link>
           </div>
-          <button className="w-full bg-[#4a90e2] text-white py-2 rounded-lg hover:bg-[#3b7dc1] transition cursor-pointer">
+          <button className="w-full bg-[#529E8D] text-white py-2 rounded-lg hover:bg-[#7b7a7a] transition cursor-pointer">
             Entrar
           </button>
           <div className="mt-4 text-center">
             <span className="text-sm text-gray-600">Não tem conta? </span>
-            <a href="#" className="text-sm text-[#4a90e2] hover:underline">
+            <Link to="/cadastro" className="text-sm text-gray-600 font-semibold hover:underline">
               Cadastre-se
-            </a>
+            </Link>
           </div>
         </form>
       </div>
