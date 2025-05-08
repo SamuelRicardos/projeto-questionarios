@@ -3,6 +3,7 @@ import Girl from '../../assets/Landingpage_quests.png';
 import Header from '../../components/Header';
 import ComoFunciona from '../../components/ComoFunciona';
 import FAQAccordion from '../../components/FAQ';
+import Footer from '../../components/Footer';
 
 const Home = () => {
     return (
@@ -60,6 +61,7 @@ const Home = () => {
                 
                 <ComoFunciona />
                 <FAQAccordion />
+                <Footer/>
             </main>
         </>
     )
