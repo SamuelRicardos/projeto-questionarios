@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Tela from "../../assets/Mulher_quiz.png";
+import Tela from "../../assets/Homem_senha.png";
 import Logo from "../../assets/Quiz_logo.png";
 
 const ResetPassword = () => {
@@ -39,7 +39,7 @@ const ResetPassword = () => {
         </form>
       </div>
 
-      <div className="w-2/3 bg-[#faf7ed] flex items-center justify-center overflow-hidden">
+      <div className="w-2/3 bg-[#FFF7E3] flex items-center justify-center overflow-hidden">
         <img
           src={Tela}
           alt="Quiz Illustration"
