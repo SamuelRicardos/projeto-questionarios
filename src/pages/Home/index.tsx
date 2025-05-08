@@ -33,35 +33,27 @@ const Home = () => {
                     <h2 className="text-3xl font-bold text-gray-800 mb-8">Categorias de questionários</h2>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-[1200px] w-full px-4">
-                        <div className="bg-[#faf7ed] p-6 rounded-lg flex flex-col items-center shadow-md">
-                            <FaCode className="text-4xl md:text-5xl text-[#a79191] mb-4" />
-                            <h3 className="text-xl md:text-2xl font-semibold text-gray-800">Programação</h3>
-                            <p className="text-gray-600 text-center text-sm md:text-base">Testes sobre JavaScript, Python, Java, C++ e mais.</p>
-                        </div>
-
-                        <div className="bg-[#faf7ed] p-6 rounded-lg flex flex-col items-center shadow-md">
-                            <FaDatabase className="text-4xl md:text-5xl text-[#a79191] mb-4" />
-                            <h3 className="text-xl md:text-2xl font-semibold text-gray-800">Banco de Dados</h3>
-                            <p className="text-gray-600 text-center text-sm md:text-base">Desafios SQL, NoSQL, modelagem e otimização.</p>
-                        </div>
-
-                        <div className="bg-[#faf7ed] p-6 rounded-lg flex flex-col items-center shadow-md">
-                            <FaCloud className="text-4xl md:text-5xl text-[#a79191] mb-4" />
-                            <h3 className="text-xl md:text-2xl font-semibold text-gray-800">Cloud Computing</h3>
-                            <p className="text-gray-600 text-center text-sm md:text-base">Testes sobre AWS, Azure, GCP e arquitetura em nuvem.</p>
-                        </div>
-
-                        <div className="bg-[#faf7ed] p-6 rounded-lg flex flex-col items-center shadow-md">
-                            <FaCogs className="text-4xl md:text-5xl text-[#a79191] mb-4" />
-                            <h3 className="text-xl md:text-2xl font-semibold text-gray-800">DevOps</h3>
-                            <p className="text-gray-600 text-center text-sm md:text-base">Conceitos sobre CI/CD, Docker, Kubernetes e mais.</p>
-                        </div>
+                        {[
+                            { icon: <FaCode className="text-4xl md:text-5xl text-[#a79191] mb-4" />, title: "Programação", description: "Testes sobre JavaScript, Python, Java, C++ e mais." },
+                            { icon: <FaDatabase className="text-4xl md:text-5xl text-[#a79191] mb-4" />, title: "Banco de Dados", description: "Desafios SQL, NoSQL, modelagem e otimização." },
+                            { icon: <FaCloud className="text-4xl md:text-5xl text-[#a79191] mb-4" />, title: "Cloud Computing", description: "Testes sobre AWS, Azure, GCP e arquitetura em nuvem." },
+                            { icon: <FaCogs className="text-4xl md:text-5xl text-[#a79191] mb-4" />, title: "DevOps", description: "Conceitos sobre CI/CD, Docker, Kubernetes e mais." },
+                        ].map((item, index) => (
+                            <div
+                                key={index}
+                                className="bg-[#faf7ed] p-6 rounded-lg flex flex-col items-center shadow-md transition-transform transform hover:-translate-x-3 hover:-translate-y-3 hover:shadow-lg"
+                            >
+                                {item.icon}
+                                <h3 className="text-xl md:text-2xl font-semibold text-gray-800">{item.title}</h3>
+                                <p className="text-gray-600 text-center text-sm md:text-base mt-2">{item.description}</p>
+                            </div>
+                        ))}
                     </div>
                 </section>
-                
+
                 <ComoFunciona />
                 <FAQAccordion />
-                <Footer/>
+                <Footer />
             </main>
         </>
     )
