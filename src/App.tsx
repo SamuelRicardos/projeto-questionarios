@@ -1,5 +1,6 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Home from "./pages/Home";
+import { useEffect } from "react";
 
 export default function App() {
 
@@ -9,6 +10,17 @@ export default function App() {
       element: <Home/>,
     }
   ]);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `//code.tidio.co/${import.meta.env.VITE_TIDIO_SCRIPT}.js`;
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <div>
