@@ -32,7 +32,7 @@ const Header = () => {
     <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#faf7ed] shadow-md' : 'bg-transparent'}`}>
       <div className="max-w-[1500px] mx-auto flex justify-between items-center p-1">
         <Link to='/' className="text-2xl font-bold text-gray-800 cursor-pointer">
-          <img src={Logo} className='w-20' alt="Logo do site"/>
+          <img src={Logo} className='w-16' alt="Logo do site"/>
         </Link>
 
         <nav className="hidden md:flex gap-6 text-gray-800 pr-4">
