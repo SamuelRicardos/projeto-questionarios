@@ -2,7 +2,7 @@ import { FaListAlt, FaChartLine, FaQuestion, FaUser } from 'react-icons/fa';
 
 const ComoFunciona = () => {
     return (
-        <section className="w-full py-16 bg-[#faf7ed] flex flex-col items-center">
+        <section id='como-funciona' className="w-full py-16 bg-[#faf7ed] flex flex-col items-center">
             <h2 className="text-3xl font-bold text-gray-800 mb-8">Como funciona?</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-[1200px] w-full px-4">

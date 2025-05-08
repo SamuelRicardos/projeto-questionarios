@@ -46,7 +46,7 @@ const FAQAccordion = () => {
   }, [activeIndex]);
 
   return (
-    <section className="w-full py-16 bg-white flex flex-col items-center">
+    <section id='faq' className="w-full py-16 bg-white flex flex-col items-center">
       <h2 className="text-3xl font-bold text-gray-800 mb-8">Perguntas frequentes</h2>
       <div className="w-full max-w-[800px] divide-y divide-gray-200 shadow-md">
         {faqs.map((faq, index) => (

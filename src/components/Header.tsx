@@ -1,20 +1,69 @@
-
+import { useEffect, useState } from 'react';
+import { Link } from 'react-scroll';
+import { FaBars, FaTimes } from 'react-icons/fa';
+import  Logo  from '../assets/Quiz_logo.png'
 
 const Header = () => {
-    return (
-        <>
-            <header className="bg-[#FDF9EC] border-none p-4 flex justify-end items-center">
-                <div className="space-x-4">
-                    <button className="px-4 py-2 bg-[#D9D9D9] font-bold text-white border border-gray-300 rounded-lg cursor-pointer">
-                        Login
-                    </button>
-                    <button className="px-4 py-2 bg-[#D9D9D9] font-bold text-white rounded-lg cursor-pointer">
-                        Cadastrar-se
-                    </button>
-                </div>
-            </header>
-        </>
-    )
-}
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-export default Header
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
+  return (
+    <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#faf7ed] shadow-md' : 'bg-transparent'}`}>
+      <div className="max-w-[1500px] mx-auto flex justify-between items-center p-1">
+        <Link to='/' className="text-2xl font-bold text-gray-800 cursor-pointer">
+          <img src={Logo} className='w-20' alt="Logo do site"/>
+        </Link>
+
+        <nav className="hidden md:flex gap-6 text-gray-800 pr-4">
+          <Link to="" smooth={true} duration={500} className="cursor-pointer hover:text-gray-600 transition">
+            Login
+          </Link>
+          <Link to="" smooth={true} duration={500} className="cursor-pointer hover:text-gray-600 transition">
+            Cadastrar-se
+          </Link>
+        </nav>
+
+        <div className="md:hidden text-gray-800 cursor-pointer" onClick={toggleMenu}>
+          {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+        </div>
+      </div>
+
+      {isOpen && (
+        <div className="md:hidden bg-[#faf7ed] flex flex-col items-center gap-4 py-4">
+          <Link to="categorias" smooth={true} duration={500} onClick={closeMenu} className="cursor-pointer hover:text-gray-600 transition">
+            Categorias
+          </Link>
+          <Link to="como-funciona" smooth={true} duration={500} onClick={closeMenu} className="cursor-pointer hover:text-gray-600 transition">
+            Como Funciona
+          </Link>
+          <Link to="faq" smooth={true} duration={500} onClick={closeMenu} className="cursor-pointer hover:text-gray-600 transition">
+            FAQ
+          </Link>
+        </div>
+      )}
+    </header>
+  );
+};
+
+export default Header;
