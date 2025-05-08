@@ -1,14 +1,18 @@
-import Header from "./components/Header"
-import Main from "./components/Main"
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import Home from "./pages/Home";
 
-function App() {
+export default function App() {
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home/>,
+    }
+  ]);
 
   return (
-    <>
-      <Header/>
-      <Main/>
-    </>
+    <div>
+      <RouterProvider router={router} />
+    </div>
   )
 }
-
-export default App
