@@ -2,6 +2,7 @@ import { FaCode, FaDatabase, FaCloud, FaCogs } from 'react-icons/fa';
 import Girl from '../../assets/Landingpage_quests.png';
 import Header from '../../components/Header';
 import ComoFunciona from '../../components/ComoFunciona';
+import FAQAccordion from '../../components/FAQ';
 
 const Home = () => {
     return (
@@ -58,6 +59,7 @@ const Home = () => {
                 </section>
                 
                 <ComoFunciona />
+                <FAQAccordion />
             </main>
         </>
     )
