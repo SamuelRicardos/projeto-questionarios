@@ -1,6 +1,7 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Home from "./pages/Home";
 import { useEffect } from "react";
+import Login from "./pages/Login";
 
 export default function App() {
 
@@ -8,6 +9,10 @@ export default function App() {
     {
       path: "/",
       element: <Home/>,
+    },
+    {
+      path: "/login",
+      element: <Login />
     }
   ]);
 
