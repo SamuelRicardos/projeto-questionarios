@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import { useEffect } from "react";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
+import ResetPassword from "./pages/ResetPassword";
 
 export default function App() {
 
@@ -18,6 +19,10 @@ export default function App() {
     {
       path: "/cadastro",
       element: <Cadastro />
+    },
+    {
+      path: "/resetpassword",
+      element: <ResetPassword />
     }
   ]);
 

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Tela from "../../assets/Mulher_quiz.png";
 import Logo from "../../assets/Quiz_logo.png";
 
-const Login = () => {
+const ResetPassword = () => {
   return (
     <div className="flex w-full h-screen relative">
       <Link to="/" className="absolute top-5 left-5">
@@ -10,41 +10,30 @@ const Login = () => {
       </Link>
 
       <div className="w-1/3 bg-[#fcfcfc] flex flex-col justify-center items-center p-10">
-        <h2 className="text-3xl font-bold text-gray-800 mb-8">Login</h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-8">Redefinir Senha</h2>
         <form className="w-full max-w-[300px]">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Email
+              E-mail
             </label>
             <input
               type="email"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#4a90e2]"
+              placeholder="Digite seu e-mail"
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Senha
-            </label>
-            <input
-              type="password"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#4a90e2]"
-            />
-          </div>
-          <div className="text-right mb-4">
-            <Link to="/resetpassword" className="text-sm text-gray-500 hover:underline">
-              Esqueceu a senha?
-            </Link>
-          </div>
+
           <button className="w-full bg-[#529E8D] text-white py-2 rounded-lg hover:bg-[#7b7a7a] transition cursor-pointer">
-            Entrar
+            Enviar link de redefinição
           </button>
+
           <div className="mt-4 text-center">
-            <span className="text-sm text-gray-600">Não tem conta? </span>
+            <span className="text-sm text-gray-600">Lembrou sua senha? </span>
             <Link
-              to="/cadastro"
+              to="/login"
               className="text-sm text-gray-600 font-semibold hover:underline"
             >
-              Cadastre-se
+              Faça login
             </Link>
           </div>
         </form>
@@ -61,4 +50,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ResetPassword;
