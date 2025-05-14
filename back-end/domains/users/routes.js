@@ -65,7 +65,7 @@ router.post("/register", async (req, res) => {
     const userExists = await User.findOne({ email });
 
     if (userExists) {
-      return handleError(res, "Usuário já cadastrado", 400);
+      return handleError(res, "Usuário já cadastrado", 409);
     }
 
     const newUser = await User.create({
@@ -81,6 +81,26 @@ router.post("/register", async (req, res) => {
 
   } catch (error) {
     handleError(res, "Erro ao cadastrar usuário");
+  }
+});
+
+router.post('/reset-password', async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return handleError(res, "Usuário não encontrado", 404);
+    }
+
+    user.password = hashPassword(newPassword);
+    await user.save();
+
+    res.status(200).json({ message: "Senha redefinida com sucesso" });
+
+  } catch (error) {
+    handleError(res, "Erro ao redefinir senha");
   }
 });
 
