@@ -56,7 +56,7 @@ const Cadastro = () => {
       }
     } catch (error: any) {
       if (error.response) {
-        toast.error(error.response.data.message, {
+        toast.error("Usuário já cadastrado", {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
