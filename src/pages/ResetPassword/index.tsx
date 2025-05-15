@@ -1,34 +1,94 @@
 import { Link } from "react-router-dom";
 import Tela from "../../assets/Homem_senha.png";
 import Logo from "../../assets/Quiz_logo.png";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// Validação com Zod
+const resetPasswordSchema = z.object({
+  email: z
+    .string()
+    .nonempty("O e-mail é obrigatório")
+    .email("Formato de e-mail inválido"),
+});
+
+type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
 const ResetPassword = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<ResetPasswordFormData>({
+    resolver: zodResolver(resetPasswordSchema),
+  });
+
+  const onSubmit = async (data: ResetPasswordFormData) => {
+    try {
+      await axios.post("http://localhost:3000/reset-password", data);
+
+      toast.success("Link de redefinição enviado para o seu e-mail!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+
+      reset();
+    } catch (error: any) {
+      toast.error(
+        error.response?.data?.error || "Erro ao enviar o link de redefinição",
+        {
+          position: "top-right",
+          autoClose: 3000,
+        }
+      );
+    }
+  };
+
   return (
     <div className="flex flex-col md:flex-row w-full h-screen relative">
       <Link to="/" className="absolute top-5 left-5">
         <img src={Logo} alt="Logo" className="w-16 h-auto object-contain" />
       </Link>
 
-      {/* Conteúdo do Formulário */}
       <div className="flex flex-1 items-center justify-center p-10 bg-[#fcfcfc]">
         <div className="w-full max-w-[300px]">
           <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-            Redefinir Senha
+            Redefinir Senha (FASE DE TESTES)
           </h2>
-          <form className="w-full">
+
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full">
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2">
                 E-mail
               </label>
               <input
                 type="email"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#4a90e2]"
+                className={`w-full px-4 py-2 border rounded-lg focus:outline-none ${
+                  errors.email ? "border-red-500" : "border-gray-300"
+                }`}
                 placeholder="Digite seu e-mail"
+                {...register("email")}
               />
+              {errors.email && (
+                <span className="text-red-500 text-sm">
+                  {errors.email.message}
+                </span>
+              )}
             </div>
 
-            <button className="w-full bg-[#529E8D] text-white py-2 rounded-lg hover:bg-[#7b7a7a] transition cursor-pointer">
-              Enviar link de redefinição
+            <button
+              type="submit"
+              className={`w-full bg-[#529E8D] text-white py-2 rounded-lg hover:bg-[#7b7a7a] transition cursor-pointer ${
+                isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Enviando..." : "Enviar link de redefinição"}
             </button>
 
             <div className="mt-4 text-center">
@@ -51,6 +111,8 @@ const ResetPassword = () => {
           className="max-w-[90%] max-h-[90%] object-contain rounded-xl"
         />
       </div>
+
+      <ToastContainer />
     </div>
   );
 };
