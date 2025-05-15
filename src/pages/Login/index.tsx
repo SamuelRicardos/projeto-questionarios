@@ -48,7 +48,7 @@ const Login = () => {
           theme: "colored",
         });
 
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("token", response.data.user.token);
 
         setUser({
           name: response.data.user.name,
