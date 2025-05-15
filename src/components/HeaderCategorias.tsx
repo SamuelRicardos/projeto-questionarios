@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { FaUserCircle, FaChevronDown } from "react-icons/fa";
+import { useAuthStore } from "../store/authStore";
+import { useNavigate } from "react-router-dom";
 
 export const HeaderCategorias = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const user = {
-    name: "Samuel Ferreira",
-    cargo: "Estudante",
-    photo: "",
-  };
+  // ✅ Pegando os dados do Zustand corretamente
+  const user = useAuthStore((state) => state.user);
+  const clearUser = useAuthStore((state) => state.clearUser);
 
   const handleDropdown = () => {
     setIsOpen((prev) => !prev);
@@ -16,7 +17,10 @@ export const HeaderCategorias = () => {
 
   const handleOptionClick = (option: string) => {
     if (option === "Sair") {
-      alert("Saindo...");
+      // ✅ Limpa o Zustand e o localStorage ao sair
+      localStorage.removeItem("token");
+      clearUser();
+      navigate("/login");
     } else {
       alert(`${option} selecionado.`);
     }
@@ -29,11 +33,11 @@ export const HeaderCategorias = () => {
 
       <div className="flex items-center gap-4 relative">
         <div className="text-right">
-          <p className="text-lg font-semibold">{user.name}</p>
-          <p className="text-sm text-gray-200">{user.cargo}</p>
+          <p className="text-lg font-semibold">{user?.name || "Usuário"}</p>
+          <p className="text-sm text-gray-200">{user?.cargo || "Visitante"}</p>
         </div>
 
-        {user.photo ? (
+        {user?.photo ? (
           <img
             src={user.photo}
             alt="Foto do usuário"

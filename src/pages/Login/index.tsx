@@ -6,6 +6,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import Tela from "../../assets/Mulher_quiz.png";
 import Logo from "../../assets/Quiz_logo.png";
+import { useAuthStore } from "../../store/authStore";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -24,6 +25,7 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
+  const setUser = useAuthStore((state) => state.setUser);
 
   const onSubmit = async (data: LoginFormData) => {
     try {
@@ -35,7 +37,6 @@ const Login = () => {
       });
 
       if (response.status === 200) {
-        console.log("entrou aqui")
         toast.success("Login realizado com sucesso!", {
           position: "top-right",
           autoClose: 3000,
@@ -48,6 +49,14 @@ const Login = () => {
         });
 
         localStorage.setItem("token", response.data.token);
+
+        setUser({
+          name: response.data.user.name,
+          cargo: "Estudante",
+          email: response.data.user.email,
+          photo: response.data.user.photo,
+        });
+
         setTimeout(() => {
           navigate("/categorias");
         }, 2000);
