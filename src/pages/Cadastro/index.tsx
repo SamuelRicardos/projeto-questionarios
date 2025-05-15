@@ -9,7 +9,6 @@ const Cadastro = () => {
         <img src={Logo} alt="Logo" className="w-16 h-auto object-contain" />
       </Link>
 
-      {/* Conteúdo do Formulário */}
       <div className="flex flex-1 items-center justify-center p-10 bg-[#fcfcfc]">
         <div className="w-full max-w-[300px]">
           <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import ResetPassword from "./pages/ResetPassword";
+import { Categorias } from "./pages/Categorias";
 
 export default function App() {
 
@@ -23,6 +24,10 @@ export default function App() {
     {
       path: "/resetpassword",
       element: <ResetPassword />
+    },
+    {
+      path: "/categorias",
+      element: <Categorias/>
     }
   ]);
 
