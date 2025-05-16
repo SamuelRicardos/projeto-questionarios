@@ -24,7 +24,7 @@ const Home = () => {
                         {theme === "dark" ? (
                             <motion.div
                                 key="dark-theme"
-                                className="relative w-full h-full flex items-center justify-center gap-10 px-10"
+                                className="relative w-full h-full hidden sm:flex items-center justify-center gap-10 px-10"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
@@ -40,8 +40,7 @@ const Home = () => {
                                     transition={{ duration: 0.7 }}
                                 />
 
-                                <div className="w-full hidden sm:flex items-center justify-center gap-10 relative z-20 px-10">
-
+                                <div className="w-full flex items-center justify-center gap-10 relative z-20 px-10">
                                     <motion.div
                                         className="flex flex-col gap-4 max-w-[50%]"
                                         initial={{ opacity: 0, x: 100 }}
