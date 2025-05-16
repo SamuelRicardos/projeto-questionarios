@@ -41,7 +41,11 @@ const Header = () => {
     >
       <div className="max-w-[1500px] mx-auto flex justify-between items-center p-1">
         <Link to="/" className="text-2xl font-bold cursor-pointer">
-          <img src={Logo} className="w-16" alt="Logo do site" />
+          <img
+            src={Logo}
+            className={`w-16 transition-all duration-300 ${theme === "dark" ? "p-2 bg-white rounded-full" : ""}`}
+            alt="Logo do site"
+          />
         </Link>
 
         <nav
