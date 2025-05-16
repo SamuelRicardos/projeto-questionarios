@@ -19,14 +19,9 @@ const Home = () => {
                     }`}
             >
                 <section className="w-full h-[89.9vh] max-w-[1600px] overflow-hidden flex justify-center relative">
-                    <img
-                        src={theme === "dark" ? test : ""}
-                        alt="Background Image"
-                        className="absolute inset-0 w-full h-full object-cover z-10"
-                    />
 
                     {theme === "dark" ? (
-                        <div className="w-full flex items-center justify-center gap-10 px-10 relative z-10">
+                        <div className="w-full hidden sm:flex items-center justify-center gap-10 px-10 relative z-10">
                             <div className="flex flex-col gap-4 max-w-[50%]">
                                 <h1 className="text-4xl font-bold text-white">
                                     Sabia que este site foi inspirado no Duolingo? ✨
@@ -38,7 +33,7 @@ const Home = () => {
                                     divertida e envolvente!
                                 </p>
                                 <button className="px-4 py-2 font-bold mt-5 border border-gray-500 rounded-lg cursor-pointer bg-gray-700 text-white hover:bg-gray-600 transition w-[30%]">
-                                    Saiba mais
+                                    Comece agora!
                                 </button>
                             </div>
 
