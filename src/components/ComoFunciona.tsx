@@ -46,8 +46,8 @@ const ComoFunciona = () => {
             key={index}
             className={`p-6 rounded-xl flex flex-col items-center shadow-lg transition-transform transform hover:-translate-y-2 hover:shadow-lg 
             ${theme === "dark"
-                ? "bg-gray-900 backdrop-blur-md border border-gray-700 hover:border-cyan-500"
-                : "bg-white/80 backdrop-blur-lg border border-gray-200 hover:border-cyan-500"
+                ? "bg-gray-900 backdrop-blur-md border border-gray-700 hover:border-cyan-500 cursor-pointer"
+                : "bg-white/80 backdrop-blur-lg border border-gray-200 hover:border-cyan-500 cursor-pointer"
               }`}
           >
             {item.icon}
