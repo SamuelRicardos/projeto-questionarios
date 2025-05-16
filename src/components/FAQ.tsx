@@ -1,32 +1,34 @@
-import { useState, useRef, useEffect } from 'react';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { motion } from 'framer-motion';
+import { useState, useRef, useEffect } from "react";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { useThemeStore } from "../store/themeStore";
 
 const FAQAccordion = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [height, setHeight] = useState<number>(0);
   const contentRef = useRef<HTMLDivElement>(null);
+  const { theme } = useThemeStore();
 
   const faqs = [
     {
-      question: 'Como posso criar uma conta?',
+      question: "Como posso criar uma conta?",
       answer:
         'Para criar uma conta, clique no botão "Cadastre-se" no topo da página e preencha os dados requisitados.',
     },
     {
-      question: 'Os questionários são gratuitos?',
+      question: "Os questionários são gratuitos?",
       answer:
-        'Sim, todos os questionários disponíveis são gratuitos para acesso e realização.',
+        "Sim, todos os questionários disponíveis são gratuitos para acesso e realização.",
     },
     {
-      question: 'Posso acompanhar meu progresso?',
+      question: "Posso acompanhar meu progresso?",
       answer:
-        'Claro! Após realizar os questionários, você pode visualizar seu desempenho no painel de usuário.',
+        "Claro! Após realizar os questionários, você pode visualizar seu desempenho no painel de usuário.",
     },
     {
-      question: 'Como funcionam as categorias?',
+      question: "Como funcionam as categorias?",
       answer:
-        'As categorias são agrupamentos de questionários de acordo com áreas de conhecimento, como Programação, Banco de Dados, DevOps, entre outros.',
+        "As categorias são agrupamentos de questionários de acordo com áreas de conhecimento, como Programação, Banco de Dados, DevOps, entre outros.",
     },
   ];
 
@@ -46,20 +48,53 @@ const FAQAccordion = () => {
   }, [activeIndex]);
 
   return (
-    <section id='faq' className="w-full py-16 bg-white flex flex-col items-center">
-      <h2 className="text-3xl font-bold text-gray-800 mb-8">Perguntas frequentes</h2>
-      <div className="w-full max-w-[800px] divide-y divide-gray-200 shadow-md">
+    <section
+      id="faq"
+      className={`w-full py-16 flex flex-col items-center transition-colors duration-300 ${
+        theme === "dark" ? "bg-gray-900" : "bg-white"
+      }`}
+    >
+      <h2
+        className={`text-3xl font-bold mb-8 transition-colors duration-300 ${
+          theme === "dark" ? "text-white" : "text-gray-800"
+        }`}
+      >
+        Perguntas frequentes
+      </h2>
+
+      <div
+        className={`w-full max-w-[800px] divide-y shadow-md transition-colors duration-300 ${
+          theme === "dark" ? "divide-gray-700" : "divide-gray-200"
+        }`}
+      >
         {faqs.map((faq, index) => (
-          <div key={index} className="bg-[#faf7ed]">
+          <div
+            key={index}
+            className={`transition-colors duration-300 ${
+              theme === "dark" ? "bg-gray-800" : "bg-[#faf7ed]"
+            }`}
+          >
             <div
               onClick={() => toggleAccordion(index)}
-              className="p-4 flex justify-between items-center cursor-pointer hover:bg-[#f6e1e1] transition"
+              className={`p-4 flex justify-between items-center cursor-pointer transition ${
+                theme === "dark"
+                  ? "hover:bg-gray-700 text-white"
+                  : "hover:bg-[#f6e1e1] text-gray-800"
+              }`}
             >
-              <h3 className="text-lg font-semibold text-gray-800">{faq.question}</h3>
+              <h3 className="text-lg font-semibold">{faq.question}</h3>
               {activeIndex === index ? (
-                <FaChevronUp className="text-gray-600" />
+                <FaChevronUp
+                  className={`transition-colors duration-300 ${
+                    theme === "dark" ? "text-white" : "text-gray-600"
+                  }`}
+                />
               ) : (
-                <FaChevronDown className="text-gray-600" />
+                <FaChevronDown
+                  className={`transition-colors duration-300 ${
+                    theme === "dark" ? "text-white" : "text-gray-600"
+                  }`}
+                />
               )}
             </div>
 
@@ -70,7 +105,11 @@ const FAQAccordion = () => {
               transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
               className="overflow-hidden"
             >
-              <div className="px-4 pb-4 text-gray-600">
+              <div
+                className={`px-4 pb-4 transition-colors duration-300 ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-600"
+                }`}
+              >
                 {faq.answer}
               </div>
             </motion.div>
