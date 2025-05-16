@@ -1,6 +1,7 @@
 import { FaCode, FaDatabase, FaCloud, FaCogs } from "react-icons/fa";
 import Girl from "../../assets/Landingpage_quests.png";
 import Duolingo from "../../assets/duolingo.png";
+import test from "../../assets/test.png"
 import Header from "../../components/Header";
 import ComoFunciona from "../../components/ComoFunciona";
 import FAQAccordion from "../../components/FAQ";
@@ -17,9 +18,15 @@ const Home = () => {
                 className={`w-full h-full transition-colors duration-300 ${theme === "dark" ? "bg-gray-800 text-white" : "bg-[#faf7ed] text-gray-800"
                     }`}
             >
-                <section className="w-full h-[89.9vh] max-w-[1500px] overflow-hidden flex justify-center relative">
+                <section className="w-full h-[89.9vh] max-w-[1600px] overflow-hidden flex justify-center relative">
+                    <img
+                        src={theme === "dark" ? test : ""}
+                        alt="Background Image"
+                        className="absolute inset-0 w-full h-full object-cover z-10"
+                    />
+
                     {theme === "dark" ? (
-                        <div className="w-full flex items-center justify-center gap-10 px-10">
+                        <div className="w-full flex items-center justify-center gap-10 px-10 relative z-10">
                             <div className="flex flex-col gap-4 max-w-[50%]">
                                 <h1 className="text-4xl font-bold text-white">
                                     Sabia que este site foi inspirado no Duolingo? ✨
@@ -45,11 +52,11 @@ const Home = () => {
                         <img
                             src={Girl}
                             alt="Foto de garota com um caderno na mão convidando para realizar questionario"
-                            className="w-[80vw] h-[100vh] object-cover hidden sm:block transition-all duration-300"
+                            className="w-[80vw] h-[100vh] object-cover hidden sm:block transition-all duration-300 relative z-10"
                         />
                     )}
 
-                    <div className="sm:hidden text-center flex flex-col items-center justify-center h-full p-4">
+                    <div className="sm:hidden text-center flex flex-col items-center justify-center h-full p-4 relative z-10">
                         <h1
                             className={`text-4xl font-bold mb-4 ${theme === "dark" ? "text-white" : "text-gray-800"
                                 }`}

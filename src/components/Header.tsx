@@ -52,7 +52,7 @@ const Header = () => {
         >
           <button
             onClick={toggleTheme}
-            className="focus:outline-none hover:text-gray-400 transition"
+            className="focus:outline-none hover:text-gray-400 transition cursor-pointer"
           >
             {theme === "light" ? (
               <FaMoon className="text-gray-800" size={20} />
