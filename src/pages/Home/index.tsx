@@ -20,6 +20,14 @@ const Home = () => {
             >
                 <section className="w-full h-[89.9vh] max-w-[1600px] overflow-hidden flex justify-center relative">
 
+                    {theme === "dark" && (
+                        <img
+                            src={test}
+                            alt="Background Image"
+                            className="absolute inset-0 w-full h-full object-cover z-10"
+                        />
+                    )}
+
                     {theme === "dark" ? (
                         <div className="w-full hidden sm:flex items-center justify-center gap-10 px-10 relative z-10">
                             <div className="flex flex-col gap-4 max-w-[50%]">
