@@ -51,7 +51,7 @@ const FAQAccordion = () => {
     <section
       id="faq"
       className={`w-full py-16 flex flex-col items-center transition-colors duration-300 ${
-        theme === "dark" ? "bg-gray-900" : "bg-white"
+        theme === "dark" ? "bg-gray-900" : "bg-[#ffffff]"
       }`}
     >
       <h2
@@ -63,30 +63,34 @@ const FAQAccordion = () => {
       </h2>
 
       <div
-        className={`w-full max-w-[800px] divide-y shadow-md transition-colors duration-300 ${
-          theme === "dark" ? "divide-gray-700" : "divide-gray-200"
+        className={`w-full max-w-[800px] divide-y shadow-lg rounded-xl overflow-hidden transition-colors duration-300 ${
+          theme === "dark"
+            ? "divide-gray-800 border border-gray-700"
+            : "divide-gray-200 border border-gray-300"
         }`}
       >
         {faqs.map((faq, index) => (
           <div
             key={index}
             className={`transition-colors duration-300 ${
-              theme === "dark" ? "bg-gray-800" : "bg-[#faf7ed]"
+              theme === "dark"
+                ? "bg-gray-800/30 backdrop-blur-md hover:bg-gray-800"
+                : "bg-white/70 hover:bg-gray-100"
             }`}
           >
             <div
               onClick={() => toggleAccordion(index)}
-              className={`p-4 flex justify-between items-center cursor-pointer transition ${
+              className={`p-5 flex justify-between items-center cursor-pointer transition-colors duration-300 ${
                 theme === "dark"
-                  ? "hover:bg-gray-700 text-white"
-                  : "hover:bg-[#f6e1e1] text-gray-800"
+                  ? "hover:text-cyan-400 text-white"
+                  : "hover:text-cyan-600 text-gray-800"
               }`}
             >
               <h3 className="text-lg font-semibold">{faq.question}</h3>
               {activeIndex === index ? (
                 <FaChevronUp
                   className={`transition-colors duration-300 ${
-                    theme === "dark" ? "text-white" : "text-gray-600"
+                    theme === "dark" ? "text-cyan-400" : "text-cyan-600"
                   }`}
                 />
               ) : (
@@ -106,7 +110,7 @@ const FAQAccordion = () => {
               className="overflow-hidden"
             >
               <div
-                className={`px-4 pb-4 transition-colors duration-300 ${
+                className={`px-5 pb-5 transition-colors duration-300 ${
                   theme === "dark" ? "text-gray-300" : "text-gray-600"
                 }`}
               >
