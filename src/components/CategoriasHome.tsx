@@ -49,7 +49,7 @@ export const CategoriasHome = () => {
                             }`}
                     >
                         {item.icon}
-                        <h3 className={`text-xl md:text-2xl font-semibold ${theme === "dark" ? "text-cyan-400" : "text-gray-800"}`}>
+                        <h3 className={`text-lg md:text-lg font-semibold whitespace-nowrap ${theme === "dark" ? "text-cyan-400" : "text-gray-800"}`}>
                             {item.title}
                         </h3>
                         <p className={`text-center text-sm md:text-base mt-2 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>

@@ -7,14 +7,12 @@ const ComoFunciona = () => {
   return (
     <section
       id="como-funciona"
-      className={`w-full py-16 flex flex-col items-center transition-colors duration-300 ${
-        theme === "dark" ? "bg-gray-800" : "bg-[#f3f4f6]"
-      }`}
+      className={`w-full py-16 flex flex-col items-center transition-colors duration-300 ${theme === "dark" ? "bg-gray-800" : "bg-[#f3f4f6]"
+        }`}
     >
       <h2
-        className={`text-3xl font-bold mb-8 transition-colors duration-300 ${
-          theme === "dark" ? "text-white" : "text-gray-800"
-        }`}
+        className={`text-3xl font-bold mb-8 transition-colors duration-300 ${theme === "dark" ? "text-white" : "text-gray-800"
+          }`}
       >
         Como funciona?
       </h2>
@@ -45,22 +43,24 @@ const ComoFunciona = () => {
           <div
             key={index}
             className={`p-6 rounded-xl flex flex-col items-center shadow-lg transition-transform transform hover:-translate-y-2 hover:shadow-lg 
-            ${theme === "dark"
+    ${theme === "dark"
                 ? "bg-gray-900 backdrop-blur-md border border-gray-700 hover:border-cyan-500 cursor-pointer"
                 : "bg-white/80 backdrop-blur-lg border border-gray-200 hover:border-cyan-500 cursor-pointer"
               }`}
           >
             {item.icon}
             <h3
-              className={`text-xl md:text-2xl font-semibold ${theme === "dark" ? "text-cyan-400" : "text-gray-800"}`}
+              className={`text-lg md:text-lg font-semibold whitespace-nowrap ${theme === "dark" ? "text-cyan-400" : "text-gray-800"}`}
             >
               {item.title}
             </h3>
-            <p
-              className={`text-center text-sm md:text-base mt-2 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}
-            >
-              {item.description}
-            </p>
+            <div className="flex-grow flex justify-center items-center">
+              <p
+                className={`text-center text-sm md:text-base mt-2 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}
+              >
+                {item.description}
+              </p>
+            </div>
           </div>
         ))}
       </div>
