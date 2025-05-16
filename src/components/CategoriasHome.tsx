@@ -20,41 +20,44 @@ export const CategoriasHome = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-[1200px] w-full px-4">
                 {[
                     {
-                        icon: <FaCode className="text-4xl md:text-5xl mb-4" />,
+                        icon: <FaCode className="text-4xl md:text-5xl mb-4 text-cyan-400" />,
                         title: "Programação",
                         description: "Testes sobre JavaScript, Python, Java, C++ e mais.",
                     },
                     {
-                        icon: <FaDatabase className="text-4xl md:text-5xl mb-4" />,
+                        icon: <FaDatabase className="text-4xl md:text-5xl mb-4 text-purple-400" />,
                         title: "Banco de Dados",
                         description: "Desafios SQL, NoSQL, modelagem e otimização.",
                     },
                     {
-                        icon: <FaCloud className="text-4xl md:text-5xl mb-4" />,
+                        icon: <FaCloud className="text-4xl md:text-5xl mb-4 text-blue-400" />,
                         title: "Cloud Computing",
                         description: "Testes sobre AWS, Azure, GCP e arquitetura em nuvem.",
                     },
                     {
-                        icon: <FaCogs className="text-4xl md:text-5xl mb-4" />,
+                        icon: <FaCogs className="text-4xl md:text-5xl mb-4 text-green-400" />,
                         title: "DevOps",
                         description: "Conceitos sobre CI/CD, Docker, Kubernetes e mais.",
                     },
                 ].map((item, index) => (
                     <div
                         key={index}
-                        className={`p-6 rounded-lg flex flex-col items-center shadow-md transition-transform transform hover:-translate-x-3 hover:-translate-y-3 hover:shadow-lg ${theme === "dark" ? "bg-gray-700 text-white" : "bg-[#faf7ed] text-gray-800"
+                        className={`p-6 rounded-xl flex flex-col items-center shadow-lg transition-transform transform hover:-translate-y-2 hover:shadow-lg 
+            ${theme === "dark"
+                                ? "bg-gray-800/30 backdrop-blur-md border border-gray-700 hover:border-cyan-500"
+                                : "bg-white/80 backdrop-blur-lg border border-gray-200 hover:border-cyan-500"
                             }`}
                     >
                         {item.icon}
-                        <h3 className="text-xl md:text-2xl font-semibold">
+                        <h3 className={`text-xl md:text-2xl font-semibold ${theme === "dark" ? "text-cyan-400" : "text-gray-800"}`}>
                             {item.title}
                         </h3>
-                        <p className="text-center text-sm md:text-base mt-2">
+                        <p className={`text-center text-sm md:text-base mt-2 ${theme === "dark" ? "text-gray-300" : "text-gray-600"}`}>
                             {item.description}
                         </p>
                     </div>
                 ))}
             </div>
         </section>
-    )
-}
+    );
+};
