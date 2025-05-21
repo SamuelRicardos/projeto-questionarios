@@ -8,7 +8,6 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// Validação com Zod
 const resetPasswordSchema = z.object({
   email: z
     .string()
@@ -30,7 +29,7 @@ const ResetPassword = () => {
 
   const onSubmit = async (data: ResetPasswordFormData) => {
     try {
-      await axios.post("http://localhost:3000/reset-password", data);
+      await axios.post("http://localhost:8080/api/email/redefinir-senha", data);
 
       toast.success("Link de redefinição enviado para o seu e-mail!", {
         position: "top-right",
@@ -57,9 +56,6 @@ const ResetPassword = () => {
 
       <div className="flex flex-1 items-center justify-center p-10 bg-[#fcfcfc]">
         <div className="w-full max-w-[300px]">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-            Redefinir Senha (FASE DE TESTES)
-          </h2>
 
           <form onSubmit={handleSubmit(onSubmit)} className="w-full">
             <div className="mb-4">
