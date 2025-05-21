@@ -10,7 +10,7 @@ import { useAuthStore } from "../../store/authStore";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
-  password: z.string().min(6, "A senha deve ter no mínimo 6 caracteres"),
+  senha: z.string().min(6, "A senha deve ter no mínimo 6 caracteres"),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -29,12 +29,14 @@ const Login = () => {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      const response = await axios.post("http://localhost:3001/users/login", data, {
+      const response = await axios.post("http://localhost:8080/auth/login", data, {
         headers: {
           "Content-Type": "application/json",
         },
         withCredentials: true,
       });
+
+      console.log(response)
 
       if (response.status === 200) {
         toast.success("Login realizado com sucesso!", {
@@ -48,13 +50,13 @@ const Login = () => {
           theme: "colored",
         });
 
-        localStorage.setItem("token", response.data.user.token);
+        localStorage.setItem("token", response.data.token);
 
         setUser({
-          name: response.data.user.name,
+          name: "Teste",
           cargo: "Estudante",
-          email: response.data.user.email,
-          photo: response.data.user.photo,
+          email: "teste@gmail.com",
+          photo: "foto1",
         });
 
         setTimeout(() => {
@@ -123,14 +125,14 @@ const Login = () => {
                 Senha
               </label>
               <input
-                type="password"
-                {...register("password")}
-                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#4a90e2] ${errors.password ? "border-red-500" : ""
+                type="senha"
+                {...register("senha")}
+                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#4a90e2] ${errors.senha ? "border-red-500" : ""
                   }`}
               />
-              {errors.password && (
+              {errors.senha && (
                 <span className="text-red-500 text-sm">
-                  {errors.password.message}
+                  {errors.senha.message}
                 </span>
               )}
             </div>
