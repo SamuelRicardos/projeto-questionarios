@@ -10,9 +10,9 @@ import Logo from "../../assets/Quiz_logo.png";
 
 // Esquema de validação com Zod
 const cadastroSchema = z.object({
-  fullName: z.string().min(2, "O nome deve ter no mínimo 2 caracteres"),
+  nome: z.string().min(2, "O nome deve ter no mínimo 2 caracteres"),
   email: z.string().email("Email inválido"),
-  password: z.string().min(6, "A senha deve ter no mínimo 6 caracteres"),
+  senha: z.string().min(6, "A senha deve ter no mínimo 6 caracteres"),
 });
 
 // Tipagem do formulário
@@ -32,13 +32,13 @@ const Cadastro = () => {
   // Função de submit
   const onSubmit = async (data: CadastroFormData) => {
     try {
-      const response = await axios.post("http://localhost:3001/users/register", data, {
+      const response = await axios.post("http://localhost:8080/auth/register", data, {
         headers: {
           "Content-Type": "application/json",
         },
       });
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         toast.success("Cadastro realizado com sucesso!", {
           position: "top-right",
           autoClose: 2000,
@@ -100,14 +100,14 @@ const Cadastro = () => {
               </label>
               <input
                 type="text"
-                {...register("fullName")}
+                {...register("nome")}
                 className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#4a90e2] ${
-                  errors.fullName ? "border-red-500" : ""
+                  errors.nome ? "border-red-500" : ""
                 }`}
               />
-              {errors.fullName && (
+              {errors.nome && (
                 <span className="text-red-500 text-sm">
-                  {errors.fullName.message}
+                  {errors.nome.message}
                 </span>
               )}
             </div>
@@ -135,15 +135,15 @@ const Cadastro = () => {
                 Senha
               </label>
               <input
-                type="password"
-                {...register("password")}
+                type="senha"
+                {...register("senha")}
                 className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#4a90e2] ${
-                  errors.password ? "border-red-500" : ""
+                  errors.senha ? "border-red-500" : ""
                 }`}
               />
-              {errors.password && (
+              {errors.senha && (
                 <span className="text-red-500 text-sm">
-                  {errors.password.message}
+                  {errors.senha.message}
                 </span>
               )}
             </div>
