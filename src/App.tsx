@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import ResetPassword from "./pages/ResetPassword";
 import { Categorias } from "./pages/Categorias";
+import NovaSenha from "./pages/NovaSenha";
 
 export default function App() {
 
@@ -24,6 +25,10 @@ export default function App() {
     {
       path: "/resetpassword",
       element: <ResetPassword />
+    },
+    {
+      path: "/nova-senha",
+      element: <NovaSenha />
     },
     {
       path: "/categorias",
