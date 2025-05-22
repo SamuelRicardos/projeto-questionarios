@@ -7,43 +7,42 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
-const newPasswordSchema = z
+const novaSenhaSchema = z
   .object({
-    password: z.string().min(6, "Senha deve ter ao menos 6 caracteres"),
+    novaSenha: z.string().min(6, "Senha deve ter ao menos 6 caracteres"),
     confirmPassword: z.string().min(6, "Confirmação obrigatória"),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.novaSenha === data.confirmPassword, {
     message: "Senhas não conferem",
     path: ["confirmPassword"],
   });
 
-type NewPasswordFormData = z.infer<typeof newPasswordSchema>;
+type novaSenhaFormData = z.infer<typeof novaSenhaSchema>;
 
 const NovaSenha = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<NewPasswordFormData>({
-    resolver: zodResolver(newPasswordSchema),
+  } = useForm<novaSenhaFormData>({
+    resolver: zodResolver(novaSenhaSchema),
   });
 
   const navigate = useNavigate();
 
-  const [token, setToken] = useState(() => {
-
+  const [token] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get("token") || "";
   });
 
-  const onSubmit = async (data: NewPasswordFormData) => {
+  const onSubmit = async (data: novaSenhaFormData) => {
     try {
-
-      await axios.post("http://localhost:8080/api/auth/nova-senha", {
+      await axios.post("http://localhost:8080/auth/nova-senha", {
         token,
-        password: data.password,
+        novaSenha: data.novaSenha,
       });
 
+      console.log(data.novaSenha)
       toast.success("Senha redefinida com sucesso!", {
         position: "top-right",
         autoClose: 3000,
@@ -53,6 +52,7 @@ const NovaSenha = () => {
         navigate("/login");
       }, 3000);
     } catch (error: any) {
+        console.log(error)
       toast.error(
         error.response?.data?.message || "Erro ao redefinir a senha.",
         {
@@ -78,16 +78,14 @@ const NovaSenha = () => {
           <input
             id="password"
             type="password"
-            {...register("password")}
+            {...register("novaSenha")}
             className={`w-full border rounded px-3 py-2 focus:outline-none ${
-              errors.password ? "border-red-500" : "border-gray-300"
+              errors.novaSenha ? "border-red-500" : "border-gray-300"
             }`}
             placeholder="Digite a nova senha"
           />
-          {errors.password && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.password.message}
-            </p>
+          {errors.novaSenha && (
+            <p className="text-red-500 text-sm mt-1">{errors.novaSenha.message}</p>
           )}
         </div>
 
@@ -105,9 +103,7 @@ const NovaSenha = () => {
             placeholder="Confirme a nova senha"
           />
           {errors.confirmPassword && (
-            <p className="text-red-500 text-sm mt-1">
-              {errors.confirmPassword.message}
-            </p>
+            <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>
           )}
         </div>
 
