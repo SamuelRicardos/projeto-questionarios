@@ -6,6 +6,7 @@ import Cadastro from "./pages/Cadastro";
 import ResetPassword from "./pages/ResetPassword";
 import { Categorias } from "./pages/Categorias";
 import NovaSenha from "./pages/NovaSenha";
+import Perguntas from "./pages/Perguntas";
 
 export default function App() {
 
@@ -33,6 +34,10 @@ export default function App() {
     {
       path: "/categorias",
       element: <Categorias/>
+    },
+    {
+      path: "/perguntas",
+      element: <Perguntas/>
     }
   ]);
 
