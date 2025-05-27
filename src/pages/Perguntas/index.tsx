@@ -4,6 +4,7 @@ import { FaHeart, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import carregamentoGif from "../../assets/carregamento.gif";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLessonStore } from "../../store/licaoStore";
+import { topicosOrdenadosPorLinguagem } from "../../store/licaoStore";
 
 type Question = {
     questao: string;
@@ -26,12 +27,12 @@ export default function Perguntas() {
     const [gameOver, setGameOver] = useState(false);
     const [gameWon, setGameWon] = useState(false);
     const [fade, setFade] = useState(true);
-    const { topico } = useParams<{ topico: string }>();
 
 
     const token = localStorage.getItem("token");
     const userEmail = localStorage.getItem("email");
 
+    const { topico, linguagem } = useParams<{ topico: string; linguagem: string }>();
     const { desbloquearProxima, concluirLicao } = useLessonStore();
 
     const fetchQuestion = async () => {
@@ -83,18 +84,17 @@ export default function Perguntas() {
     useEffect(() => {
         if (gameWon) {
             enviarDesempenho(true);
-
-            if (topico) {
-                concluirLicao(topico);
-                desbloquearProxima(topico);
+            if (linguagem && topico) {
+                concluirLicao(linguagem, topico);
+                desbloquearProxima(linguagem, topico);
             }
 
             setTimeout(() => {
-                const proximoTopico = obterProximoTopico(topico);
+                const proximoTopico = obterProximoTopico(linguagem, topico);
                 if (proximoTopico) {
-                    navigate(`/perguntas/${proximoTopico}`);
+                    navigate(`/perguntas/${linguagem}/${proximoTopico}`);
                 } else {
-                    navigate("/roadmap-python");
+                    navigate(`/roadmap-${linguagem}`);
                 }
             }, 1500);
         }
@@ -141,12 +141,11 @@ export default function Perguntas() {
         fetchQuestion();
     };
 
-    const obterProximoTopico = (atual: string | undefined): string | null => {
-        const topicos = ["Introducao", "Variaveis", "Condicionais", "Loops", "Funcoes", "POO"];
-        if (!atual) return null;
+    const obterProximoTopico = (ling: string | undefined, atual: string | undefined): string | null => {
+        if (!ling || !atual) return null;
+        const topicos = topicosOrdenadosPorLinguagem[ling];
         const idx = topicos.indexOf(atual);
-        if (idx === -1 || idx === topicos.length - 1) return null;
-        return topicos[idx + 1];
+        return idx !== -1 && idx < topicos.length - 1 ? topicos[idx + 1] : null;
     };
 
     if (loading)

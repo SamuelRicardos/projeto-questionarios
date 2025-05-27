@@ -17,7 +17,7 @@ type LessonStore = {
   concluirLicao: (linguagem: string, topicoAtual: string) => void;
 };
 
-const topicosOrdenadosPorLinguagem: Record<string, string[]> = {
+export const topicosOrdenadosPorLinguagem: Record<string, string[]> = {
   python: ["introducao", "variaveis", "operadores", "condicionais", "loops", "funcoes", "listas"],
   java: ["introducao", "variaveis", "operadores", "condicionais", "loops", "poo", "colecoes"],
   csharp: ["introducao", "variaveis", "operadores", "condicionais", "loops", "funcoes", "poo"],
