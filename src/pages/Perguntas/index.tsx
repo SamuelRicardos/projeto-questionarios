@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { FaHeart, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import carregamentoGif from "../../assets/carregamento.gif";
+import { useNavigate, useParams } from "react-router-dom";
 
 type Question = {
     questao: string;
@@ -13,6 +14,7 @@ type Question = {
 export default function Perguntas() {
     const MAX_LIVES = 3;
     const MAX_QUESTIONS = 5;
+    const navigate = useNavigate()
 
     const [question, setQuestion] = useState<Question | null>(null);
     const [selected, setSelected] = useState<string | null>(null);
@@ -23,6 +25,7 @@ export default function Perguntas() {
     const [gameOver, setGameOver] = useState(false);
     const [gameWon, setGameWon] = useState(false);
     const [fade, setFade] = useState(true);
+    const { topico } = useParams<{ topico: string }>();
 
     const fetchQuestion = async () => {
         try {
@@ -30,9 +33,7 @@ export default function Perguntas() {
             setSelected(null);
             setAnswered(false);
 
-            const response = await axios.get(
-                "http://localhost:8080/api/perguntas/gerar?topico=listas"
-            );
+            const response = await axios.get(`http://localhost:8080/api/perguntas/gerar?topico=${topico}`);
             setQuestion(response.data);
             setFade(true);
         } catch (err) {
@@ -41,6 +42,13 @@ export default function Perguntas() {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (gameWon) {
+            window.dispatchEvent(new CustomEvent("unlockNextTopic", { detail: topico }));
+        }
+    }, [gameWon]);
+
 
     useEffect(() => {
         fetchQuestion();
@@ -92,12 +100,21 @@ export default function Perguntas() {
                         ? "Você perdeu todas as vidas!"
                         : "Parabéns! Você concluiu todas as perguntas!"}
                 </div>
-                <button
-                    onClick={restart}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition cursor-pointer"
-                >
-                    Jogar novamente
-                </button>
+                <div className="flex justify-center gap-4 mt-4">
+                    <button
+                        onClick={restart}
+                        className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition cursor-pointer"
+                    >
+                        Jogar novamente
+                    </button>
+
+                    <button
+                        onClick={() => navigate("/roadmap-python")}
+                        className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition cursor-pointer"
+                    >
+                        Voltar para o Roadmap
+                    </button>
+                </div>
             </div>
         );
 
@@ -122,7 +139,7 @@ export default function Perguntas() {
                         />
                     ))}
                 </div>
-                <div className="text-sm text-gray-500">Python - Tópico: Listas</div>
+                <div className="text-sm text-gray-500">Python - Tópico: {topico}</div>
             </div>
 
             <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2 overflow-hidden">

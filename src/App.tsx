@@ -37,8 +37,8 @@ export default function App() {
       element: <Categorias/>
     },
     {
-      path: "/perguntas",
-      element: <Perguntas/>
+      path: "/perguntas/:topico",
+      element: <Perguntas />
     },
     {
       path: "/roadmap-python",
