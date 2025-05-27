@@ -7,6 +7,7 @@ import ResetPassword from "./pages/ResetPassword";
 import { Categorias } from "./pages/Categorias";
 import NovaSenha from "./pages/NovaSenha";
 import Perguntas from "./pages/Perguntas";
+import { RoadmapPython } from "./pages/Roadmap/Python";
 
 export default function App() {
 
@@ -38,7 +39,11 @@ export default function App() {
     {
       path: "/perguntas",
       element: <Perguntas/>
-    }
+    },
+    {
+      path: "/roadmap-python",
+      element: <RoadmapPython/>
+    },
   ]);
 
   useEffect(() => {
