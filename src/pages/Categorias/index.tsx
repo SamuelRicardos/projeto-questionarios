@@ -3,36 +3,43 @@ import { Sidebar } from "../../components/Sidebar";
 import { useThemeStore } from "../../store/themeStore";
 
 export const Categorias = () => {
-
   const { theme } = useThemeStore();
-
   const isDark = theme === "dark";
 
-  const containerClasses = `flex min-h-screen ${isDark ? "bg-gray-900 text-gray-100" : "bg-[#faf7ed] text-gray-800"
+  const containerClasses = `flex min-h-screen ${isDark ? "bg-gray-900 text-gray-100" : "bg-[#faf7ed] text-gray-800"}`;
+
+  const cardClasses = `p-6 rounded-2xl shadow-2xl transition-transform duration-300 hover:scale-105 cursor-pointer border 
+    ${isDark
+      ? "bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e40af] text-white border-blue-500/20 hover:shadow-blue-500/30"
+      : "bg-gradient-to-br from-[#edf2f7] via-[#e6f0fa] to-[#d9e2ec] border-none"
     }`;
 
-  const cardClasses = `border p-6 rounded-2xl shadow-md hover:shadow-xl transition-transform duration-300 hover:scale-105 ${isDark ? "bg-gray-800 border-gray-700 text-gray-100" : "bg-white border-gray-300 text-gray-800"
-    }`;
-
-  const paragraphClasses = isDark ? "text-gray-400 text-sm text-center" : "text-gray-600 text-sm text-center";
+  const titleClasses = `${isDark ? "text-white" : "text-gray-900"}`;
+  const paragraphClasses = `${isDark ? "text-gray-300" : "text-gray-600"} text-sm text-center`;
 
   return (
     <div className={containerClasses}>
       <Sidebar />
       <BotaoTema />
-      <div className="flex flex-col items-center py-10 flex-1">
-        <h1 className="text-3xl font-bold mb-8">Escolha a sua linguagem!</h1>
+      <div className={`flex flex-col items-center py-10 flex-1 transition-colors duration-300 ${isDark
+          ? "bg-gradient-to-br from-[#1f2937] via-[#0f172a] to-[#11255b]"
+          : "bg-gradient-to-br from-[#f0e8d9] via-[#fff] to-[#e6e4d8]"
+        }`}>
+        <h1 className={`text-4xl font-bold mb-10 text-center transition-colors duration-300 ${isDark ? "text-white" : "text-gray-900"
+          }`}>
+          Escolha a sua linguagem!
+        </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-[90%] max-w-[1000px] px-4">
           <a href="/roadmap-python" className={cardClasses}>
             <div className="flex justify-center mb-4">
               <img
-                src="https://img.freepik.com/vetores-premium/icone-de-python_1181510-14.jpg"
+                src="https://w7.pngwing.com/pngs/447/294/png-transparent-python-javascript-logo-clojure-python-logo-blue-angle-text.png"
                 alt="Python"
-                className="w-100 h-14 object-contain"
+                className="h-14 w-auto object-contain"
               />
             </div>
-            <h2 className="text-center text-xl font-semibold mb-2">Python</h2>
+            <h2 className={`text-center text-xl font-semibold mb-2 ${titleClasses}`}>Python</h2>
             <p className={paragraphClasses}>
               Comece sua jornada com Python, a linguagem versátil e poderosa.
             </p>
@@ -46,7 +53,7 @@ export const Categorias = () => {
                 className="h-14 w-auto object-contain"
               />
             </div>
-            <h2 className="text-center text-xl font-semibold mb-2">Java</h2>
+            <h2 className={`text-center text-xl font-semibold mb-2 ${titleClasses}`}>Java</h2>
             <p className={paragraphClasses}>
               Aprenda Java, amplamente usado em sistemas corporativos e Android.
             </p>
@@ -60,7 +67,7 @@ export const Categorias = () => {
                 className="h-14 w-auto object-contain"
               />
             </div>
-            <h2 className="text-center text-xl font-semibold mb-2">C#</h2>
+            <h2 className={`text-center text-xl font-semibold mb-2 ${titleClasses}`}>C#</h2>
             <p className={paragraphClasses}>
               Explore C#, ideal para desenvolvimento .NET e jogos com Unity.
             </p>
