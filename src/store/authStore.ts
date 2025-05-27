@@ -10,7 +10,7 @@ interface User {
 interface AuthState {
   user: User | null;
   setUser: (user: User) => void;
-  clearUser: () => void; // ✅ Adicionei o método clearUser aqui
+  clearUser: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
