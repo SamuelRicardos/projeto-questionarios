@@ -14,13 +14,14 @@ type LessonStore = {
   licoes: Licao[];
   atualizarStatus: (topico: string, novoStatus: Status) => void;
   desbloquearProxima: (topicoAtual: string) => void;
+  concluirLicao: (topicoAtual: string) => void;
 };
 
 const topicosOrdenados = ["introducao", "variaveis", "operadores", "condicionais", "loops", "funcoes", "listas"];
 
 export const useLessonStore = create<LessonStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       licoes: [
         { id: 1, titulo: "Introdução ao Python", status: "concluida", topico: "introducao" },
         { id: 2, titulo: "Variáveis e Tipos", status: "concluida", topico: "variaveis" },
@@ -48,6 +49,11 @@ export const useLessonStore = create<LessonStore>()(
               : licao
           ),
         }));
+      },
+      concluirLicao: (topicoAtual) => {
+        const { atualizarStatus, desbloquearProxima } = get();
+        atualizarStatus(topicoAtual, "concluida");
+        desbloquearProxima(topicoAtual);
       },
     }),
     {

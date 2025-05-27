@@ -31,7 +31,8 @@ export default function Perguntas() {
 
     const token = localStorage.getItem("token");
     const userEmail = localStorage.getItem("email");
-    const { desbloquearProxima } = useLessonStore();
+
+    const { desbloquearProxima, concluirLicao } = useLessonStore();
 
     const fetchQuestion = async () => {
         try {
@@ -84,6 +85,7 @@ export default function Perguntas() {
             enviarDesempenho(true);
 
             if (topico) {
+                concluirLicao(topico);
                 desbloquearProxima(topico);
             }
 
