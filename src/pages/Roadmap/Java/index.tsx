@@ -15,7 +15,7 @@ export const RoadmapJava = () => {
   const licoes = licoesPorLinguagem["java"];
 
   const iniciarTopico = (topico: string) => {
-    navigate(`/perguntas/${topico}`);
+    navigate(`/perguntas/java/${topico}`);
   };
 
   return (

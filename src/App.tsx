@@ -39,7 +39,7 @@ export default function App() {
       element: <Categorias/>
     },
     {
-      path: "/perguntas/:topico",
+      path: "/perguntas/:linguagem/:topico",
       element: <Perguntas />
     },
     {

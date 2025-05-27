@@ -12,10 +12,10 @@ const icones = {
 export const RoadmapCsharp = () => {
   const navigate = useNavigate();
   const { licoesPorLinguagem } = useLessonStore();
-  const licoes = licoesPorLinguagem["csharp"]; // Pega lições da linguagem C#
+  const licoes = licoesPorLinguagem["csharp"];
 
   const iniciarTopico = (topico: string) => {
-    navigate(`/perguntas/${topico}`);
+    navigate(`/perguntas/csharp/${topico}`);
   };
 
   return (

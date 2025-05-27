@@ -172,7 +172,7 @@ export default function Perguntas() {
                     </button>
 
                     <button
-                        onClick={() => navigate("/roadmap-python")}
+                        onClick={() => navigate(`/roadmap-${linguagem}`)}
                         className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition cursor-pointer"
                     >
                         Voltar para o Roadmap

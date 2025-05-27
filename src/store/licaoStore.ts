@@ -70,7 +70,7 @@ export const useLessonStore = create<LessonStore>()(
           { id: 7, titulo: "Coleções", status: "bloqueada", topico: "Coleções" },
         ],
         csharp: [
-          { id: 1, titulo: "Introdução ao C#", status: "disponivel", topico: "Introdução ao C#" },
+          { id: 1, titulo: "Introdução ao Csharp", status: "disponivel", topico: "Introdução ao Csharp" },
           { id: 2, titulo: "Variáveis e Tipos", status: "bloqueada", topico: "Variáveis e Tipos" },
           { id: 3, titulo: "Operadores", status: "bloqueada", topico: "Operadores" },
           { id: 4, titulo: "Condicionais", status: "bloqueada", topico: "Condicionais" },

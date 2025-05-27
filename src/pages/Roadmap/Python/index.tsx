@@ -15,7 +15,7 @@ export const RoadmapPython = () => {
   const licoes = licoesPorLinguagem["python"];
 
   const iniciarTopico = (topico: string) => {
-    navigate(`/perguntas/${topico}`);
+    navigate(`/perguntas/python/${topico}`);
   };
 
   return (
