@@ -15,9 +15,9 @@ export const Categorias = () => {
           >
             <div className="flex justify-center mb-4">
               <img
-                src="https://www.python.org/static/community_logos/python-logo.png"
+                src="https://img.freepik.com/vetores-premium/icone-de-python_1181510-14.jpg"
                 alt="Python"
-                className="h-14 w-auto object-contain"
+                className="w-100 h-14 object-contain"
               />
             </div>
             <h2 className="text-center text-xl font-semibold mb-2">Python</h2>
@@ -27,12 +27,12 @@ export const Categorias = () => {
           </a>
 
           <a
-            href="/roadmaps/java"
+            href="/roadmap-java"
             className="bg-white border border-gray-300 p-6 rounded-2xl shadow-md hover:shadow-xl transition-transform duration-300 hover:scale-105"
           >
             <div className="flex justify-center mb-4">
               <img
-                src="https://cdn.worldvectorlogo.com/logos/java-4.svg"
+                src="https://cdn-icons-png.freepik.com/512/5968/5968282.png?ga=GA1.1.1484315943.1747346408"
                 alt="Java"
                 className="h-14 w-auto object-contain"
               />
@@ -43,9 +43,8 @@ export const Categorias = () => {
             </p>
           </a>
 
-          {/* C# */}
           <a
-            href="/roadmaps/csharp"
+            href="/roadmap-csharp"
             className="bg-white border border-gray-300 p-6 rounded-2xl shadow-md hover:shadow-xl transition-transform duration-300 hover:scale-105"
           >
             <div className="flex justify-center mb-4">

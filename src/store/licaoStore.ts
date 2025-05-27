@@ -11,54 +11,89 @@ type Licao = {
 };
 
 type LessonStore = {
-  licoes: Licao[];
-  atualizarStatus: (topico: string, novoStatus: Status) => void;
-  desbloquearProxima: (topicoAtual: string) => void;
-  concluirLicao: (topicoAtual: string) => void;
+  licoesPorLinguagem: Record<string, Licao[]>;
+  atualizarStatus: (linguagem: string, topico: string, novoStatus: Status) => void;
+  desbloquearProxima: (linguagem: string, topicoAtual: string) => void;
+  concluirLicao: (linguagem: string, topicoAtual: string) => void;
 };
 
-const topicosOrdenados = ["introducao", "variaveis", "operadores", "condicionais", "loops", "funcoes", "listas"];
+const topicosOrdenadosPorLinguagem: Record<string, string[]> = {
+  python: ["introducao", "variaveis", "operadores", "condicionais", "loops", "funcoes", "listas"],
+  java: ["introducao", "variaveis", "operadores", "condicionais", "loops", "poo", "colecoes"],
+  csharp: ["introducao", "variaveis", "operadores", "condicionais", "loops", "funcoes", "poo"],
+};
 
 export const useLessonStore = create<LessonStore>()(
   persist(
     (set, get) => ({
-      licoes: [
-        { id: 1, titulo: "Introdução ao Python", status: "concluida", topico: "introducao" },
-        { id: 2, titulo: "Variáveis e Tipos", status: "concluida", topico: "variaveis" },
-        { id: 3, titulo: "Operadores", status: "disponivel", topico: "operadores" },
-        { id: 4, titulo: "Condicionais", status: "bloqueada", topico: "condicionais" },
-        { id: 5, titulo: "Laços de Repetição", status: "bloqueada", topico: "loops" },
-        { id: 6, titulo: "Funções", status: "bloqueada", topico: "funcoes" },
-        { id: 7, titulo: "Listas e Tuplas", status: "bloqueada", topico: "listas" },
-      ],
-      atualizarStatus: (topico, novoStatus) =>
+      licoesPorLinguagem: {
+        python: [
+          { id: 1, titulo: "Introdução ao Python", status: "disponivel", topico: "introducao" },
+          { id: 2, titulo: "Variáveis e Tipos", status: "bloqueada", topico: "variaveis" },
+          { id: 3, titulo: "Operadores", status: "bloqueada", topico: "operadores" },
+          { id: 4, titulo: "Condicionais", status: "bloqueada", topico: "condicionais" },
+          { id: 5, titulo: "Laços de Repetição", status: "bloqueada", topico: "loops" },
+          { id: 6, titulo: "Funções", status: "bloqueada", topico: "funcoes" },
+          { id: 7, titulo: "Listas e Tuplas", status: "bloqueada", topico: "listas" },
+        ],
+        java: [
+          { id: 1, titulo: "Introdução ao Java", status: "disponivel", topico: "introducao" },
+          { id: 2, titulo: "Variáveis e Tipos", status: "bloqueada", topico: "variaveis" },
+          { id: 3, titulo: "Operadores", status: "bloqueada", topico: "operadores" },
+          { id: 4, titulo: "Condicionais", status: "bloqueada", topico: "condicionais" },
+          { id: 5, titulo: "Laços de Repetição", status: "bloqueada", topico: "loops" },
+          { id: 6, titulo: "Orientação a Objetos", status: "bloqueada", topico: "poo" },
+          { id: 7, titulo: "Coleções", status: "bloqueada", topico: "colecoes" },
+        ],
+        csharp: [
+          { id: 1, titulo: "Introdução ao C#", status: "disponivel", topico: "introducao" },
+          { id: 2, titulo: "Variáveis e Tipos", status: "bloqueada", topico: "variaveis" },
+          { id: 3, titulo: "Operadores", status: "bloqueada", topico: "operadores" },
+          { id: 4, titulo: "Condicionais", status: "bloqueada", topico: "condicionais" },
+          { id: 5, titulo: "Laços de Repetição", status: "bloqueada", topico: "loops" },
+          { id: 6, titulo: "Métodos e Funções", status: "bloqueada", topico: "funcoes" },
+          { id: 7, titulo: "Programação Orientada a Objetos", status: "bloqueada", topico: "poo" },
+        ],
+
+      },
+
+      atualizarStatus: (linguagem, topico, novoStatus) =>
         set((state) => ({
-          licoes: state.licoes.map((licao) =>
-            licao.topico === topico ? { ...licao, status: novoStatus } : licao
-          ),
+          licoesPorLinguagem: {
+            ...state.licoesPorLinguagem,
+            [linguagem]: state.licoesPorLinguagem[linguagem].map((licao) =>
+              licao.topico === topico ? { ...licao, status: novoStatus } : licao
+            ),
+          },
         })),
-      desbloquearProxima: (topicoAtual) => {
-        const idxAtual = topicosOrdenados.indexOf(topicoAtual);
-        const proximoTopico = topicosOrdenados[idxAtual + 1];
+
+      desbloquearProxima: (linguagem, topicoAtual) => {
+        const topicos = topicosOrdenadosPorLinguagem[linguagem];
+        const idxAtual = topicos.indexOf(topicoAtual);
+        const proximoTopico = topicos[idxAtual + 1];
         if (!proximoTopico) return;
 
         set((state) => ({
-          licoes: state.licoes.map((licao) =>
-            licao.topico === proximoTopico && licao.status === "bloqueada"
-              ? { ...licao, status: "disponivel" }
-              : licao
-          ),
+          licoesPorLinguagem: {
+            ...state.licoesPorLinguagem,
+            [linguagem]: state.licoesPorLinguagem[linguagem].map((licao) =>
+              licao.topico === proximoTopico && licao.status === "bloqueada"
+                ? { ...licao, status: "disponivel" }
+                : licao
+            ),
+          },
         }));
       },
-      concluirLicao: (topicoAtual) => {
+
+      concluirLicao: (linguagem, topicoAtual) => {
         const { atualizarStatus, desbloquearProxima } = get();
-        atualizarStatus(topicoAtual, "concluida");
-        desbloquearProxima(topicoAtual);
+        atualizarStatus(linguagem, topicoAtual, "concluida");
+        desbloquearProxima(linguagem, topicoAtual);
       },
     }),
     {
-      name: "licao-store",
-      partialize: (state) => ({ licoes: state.licoes }),
+      name: "licao-store-v2",
+      partialize: (state) => ({ licoesPorLinguagem: state.licoesPorLinguagem }),
     }
   )
 );

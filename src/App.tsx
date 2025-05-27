@@ -8,6 +8,8 @@ import { Categorias } from "./pages/Categorias";
 import NovaSenha from "./pages/NovaSenha";
 import Perguntas from "./pages/Perguntas";
 import { RoadmapPython } from "./pages/Roadmap/Python";
+import { RoadmapJava } from "./pages/Roadmap/Java";
+import { RoadmapCsharp } from "./pages/Roadmap/Csharp";
 
 export default function App() {
 
@@ -44,6 +46,14 @@ export default function App() {
       path: "/roadmap-python",
       element: <RoadmapPython/>
     },
+    {
+      path: "/roadmap-java",
+      element: <RoadmapJava/>
+    },
+    {
+      path: "/roadmap-csharp",
+      element: <RoadmapCsharp/>
+    }
   ]);
 
   useEffect(() => {
