@@ -51,7 +51,7 @@ export const useLessonStore = create<LessonStore>()(
   persist(
     (set, get) => ({
       licoesPorLinguagem: {
-        python: [
+        Python: [
           { id: 1, titulo: "Introdução ao Python", status: "disponivel", topico: "Introdução ao Python" },
           { id: 2, titulo: "Variáveis e Tipos", status: "bloqueada", topico: "Variáveis e Tipos" },
           { id: 3, titulo: "Operadores", status: "bloqueada", topico: "Operadores" },
@@ -60,7 +60,7 @@ export const useLessonStore = create<LessonStore>()(
           { id: 6, titulo: "Funções", status: "bloqueada", topico: "Funções" },
           { id: 7, titulo: "Listas e Tuplas", status: "bloqueada", topico: "Listas e Tuplas" },
         ],
-        java: [
+        Java: [
           { id: 1, titulo: "Introdução ao Java", status: "disponivel", topico: "Introdução ao Java" },
           { id: 2, titulo: "Variáveis e Tipos", status: "bloqueada", topico: "Variáveis e Tipos" },
           { id: 3, titulo: "Operadores", status: "bloqueada", topico: "Operadores" },
@@ -69,7 +69,7 @@ export const useLessonStore = create<LessonStore>()(
           { id: 6, titulo: "Orientação a Objetos", status: "bloqueada", topico: "Orientação a Objetos" },
           { id: 7, titulo: "Coleções", status: "bloqueada", topico: "Coleções" },
         ],
-        csharp: [
+        Csharp: [
           { id: 1, titulo: "Introdução ao Csharp", status: "disponivel", topico: "Introdução ao Csharp" },
           { id: 2, titulo: "Variáveis e Tipos", status: "bloqueada", topico: "Variáveis e Tipos" },
           { id: 3, titulo: "Operadores", status: "bloqueada", topico: "Operadores" },

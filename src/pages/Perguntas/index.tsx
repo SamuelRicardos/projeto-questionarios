@@ -42,7 +42,7 @@ export default function Perguntas() {
             setAnswered(false);
 
 
-            const response = await axios.get(`http://localhost:8080/api/perguntas/gerar?topico=${topico}`, {
+            const response = await axios.get(`http://localhost:8080/api/perguntas/gerar?linguagem=${linguagem}&topico=${topico}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -202,7 +202,7 @@ export default function Perguntas() {
                         />
                     ))}
                 </div>
-                <div className="text-sm text-gray-500">Python - Tópico: {topico}</div>
+                <div className="text-sm text-gray-500">{linguagem} - Tópico: {topico}</div>
             </div>
 
             <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2 overflow-hidden">
