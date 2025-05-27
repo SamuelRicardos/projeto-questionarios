@@ -7,6 +7,7 @@ import {
   FaSignOutAlt,
   FaUserCircle,
 } from "react-icons/fa";
+import { useThemeStore } from "../store/themeStore";
 
 const menuItems = [
   { id: 1, label: "Início", icon: <FaHome />, href: "/" },
@@ -17,6 +18,7 @@ const menuItems = [
 
 export const Sidebar = () => {
   const [user, setUser] = useState<{ nome: string; email: string } | null>(null);
+  const theme = useThemeStore((state: { theme: any; }) => state.theme);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -40,16 +42,30 @@ export const Sidebar = () => {
   }, []);
 
   return (
-    <aside className="flex flex-col bg-white w-64 h-screen border-r border-gray-200 shadow-lg sticky top-0" aria-label="Sidebar principal">
-      <div className="flex items-center gap-4 p-4 border-b border-gray-200">
+    <aside
+      className={`flex flex-col w-64 h-screen border-r shadow-lg sticky top-0
+        ${theme === "dark"
+          ? "bg-gray-900 border-gray-700 text-gray-100"
+          : "bg-white border-gray-200 text-gray-800"
+        }
+      `}
+      aria-label="Sidebar principal"
+    >
+      <div
+        className={`flex items-center gap-4 p-4 border-b
+          ${theme === "dark" ? "border-gray-700" : "border-gray-200"}
+        `}
+      >
         <div className="w-12 h-12 rounded-full flex items-center justify-center">
-          <FaUserCircle className="text-3xl text-gray-500" />
+          <FaUserCircle className={`${theme === "dark" ? "text-gray-400" : "text-gray-500"} text-3xl`} />
         </div>
         <div>
-          <p className="text-lg font-semibold text-gray-800 truncate whitespace-nowrap overflow-hidden max-w-[140px]">
+          <p className="text-lg font-semibold truncate whitespace-nowrap overflow-hidden max-w-[140px]">
             {user ? user.nome : "Carregando..."}
           </p>
-          <p className="text-sm text-gray-500">Estudante</p>
+          <p className={`${theme === "dark" ? "text-gray-400" : "text-gray-500"} text-sm`}>
+            Estudante
+          </p>
         </div>
       </div>
 
@@ -58,9 +74,15 @@ export const Sidebar = () => {
           <a
             key={id}
             href={href}
-            className="flex items-center gap-3 px-6 py-3 text-gray-700 hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 focus:ring-offset-white cursor-pointer"
             role="menuitem"
             tabIndex={0}
+            className={`flex items-center gap-3 px-6 py-3 rounded-md cursor-pointer transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1
+              ${
+                theme === "dark"
+                  ? "text-gray-300 hover:bg-gray-700 hover:text-white focus:ring-blue-400 focus:ring-offset-gray-900"
+                  : "text-gray-700 hover:bg-blue-100 hover:text-blue-700 focus:ring-blue-500 focus:ring-offset-white"
+              }
+            `}
           >
             <span className="text-lg">{icon}</span>
             <span className="text-md font-medium">{label}</span>
@@ -68,7 +90,11 @@ export const Sidebar = () => {
         ))}
       </nav>
 
-      <div className="p-4 border-t border-gray-200 text-center text-gray-400 text-sm">
+      <div
+        className={`p-4 border-t text-center text-sm
+          ${theme === "dark" ? "border-gray-700 text-gray-400" : "border-gray-200 text-gray-400"}
+        `}
+      >
         © 2025 Sua Plataforma
       </div>
     </aside>
