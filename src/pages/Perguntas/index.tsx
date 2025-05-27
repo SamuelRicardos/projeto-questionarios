@@ -14,7 +14,7 @@ type Question = {
 export default function Perguntas() {
     const MAX_LIVES = 3;
     const MAX_QUESTIONS = 5;
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const [question, setQuestion] = useState<Question | null>(null);
     const [selected, setSelected] = useState<string | null>(null);
@@ -27,13 +27,22 @@ export default function Perguntas() {
     const [fade, setFade] = useState(true);
     const { topico } = useParams<{ topico: string }>();
 
+
+    const token = localStorage.getItem("token");
+    const userEmail = localStorage.getItem("email");
+
     const fetchQuestion = async () => {
         try {
             setLoading(true);
             setSelected(null);
             setAnswered(false);
 
-            const response = await axios.get(`http://localhost:8080/api/perguntas/gerar?topico=${topico}`);
+
+            const response = await axios.get(`http://localhost:8080/api/perguntas/gerar?topico=${topico}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             setQuestion(response.data);
             setFade(true);
         } catch (err) {
@@ -43,16 +52,55 @@ export default function Perguntas() {
         }
     };
 
+    const enviarDesempenho = async (acertou: boolean) => {
+        if (!userEmail || !token) {
+            console.error("Usuário não autenticado ou email não encontrado");
+            return;
+        }
+        try {
+            await axios.post(
+                "http://localhost:8080/api/desempenho/atualizar",
+                {
+                    email: userEmail,
+                    categoria: topico,
+                    acertou,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            console.log("Desempenho enviado com sucesso!");
+        } catch (error) {
+            console.error("Erro ao enviar desempenho:", error);
+        }
+    };
+
     useEffect(() => {
         if (gameWon) {
-            window.dispatchEvent(new CustomEvent("unlockNextTopic", { detail: topico }));
+            enviarDesempenho(true);
+            setTimeout(() => {
+                const proximoTopico = obterProximoTopico(topico);
+                if (proximoTopico) {
+                    navigate(`/perguntas/${proximoTopico}`);
+                } else {
+                    navigate("/roadmap-python");
+                }
+            }, 1500);
         }
     }, [gameWon]);
 
+    // Efeito que detecta se o usuário perdeu o jogo (perdeu todas as vidas)
+    useEffect(() => {
+        if (gameOver) {
+            enviarDesempenho(false);
+        }
+    }, [gameOver]);
 
     useEffect(() => {
         fetchQuestion();
-    }, []);
+    }, [topico]);
 
     useEffect(() => {
         if (lives <= 0) setGameOver(true);
@@ -83,6 +131,15 @@ export default function Perguntas() {
         setSelected(null);
         setAnswered(false);
         fetchQuestion();
+    };
+
+    // Lista dos tópicos para navegação - atualize conforme seu projeto
+    const obterProximoTopico = (atual: string | undefined): string | null => {
+        const topicos = ["Introducao", "Variaveis", "Condicionais", "Loops", "Funcoes", "POO"];
+        if (!atual) return null;
+        const idx = topicos.indexOf(atual);
+        if (idx === -1 || idx === topicos.length - 1) return null;
+        return topicos[idx + 1];
     };
 
     if (loading)

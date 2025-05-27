@@ -51,6 +51,7 @@ const Login = () => {
         });
 
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem('email', response.data.email);
 
         setUser({
           name: "Teste",
@@ -125,7 +126,7 @@ const Login = () => {
                 Senha
               </label>
               <input
-                type="senha"
+                type="password"
                 {...register("senha")}
                 className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-[#4a90e2] ${errors.senha ? "border-red-500" : ""
                   }`}
