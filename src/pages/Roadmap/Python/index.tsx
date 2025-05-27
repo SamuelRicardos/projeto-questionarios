@@ -1,23 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaLock, FaCheckCircle, FaPlay } from "react-icons/fa";
-
-type Licao = {
-  id: number;
-  titulo: string;
-  status: "bloqueada" | "disponivel" | "concluida";
-  topico: string;
-};
-
-const licoes: Licao[] = [
-  { id: 1, titulo: "Introdução ao Python", status: "concluida", topico: "introducao" },
-  { id: 2, titulo: "Variáveis e Tipos", status: "concluida", topico: "variaveis" },
-  { id: 3, titulo: "Operadores", status: "disponivel", topico: "operadores" },
-  { id: 4, titulo: "Condicionais", status: "bloqueada", topico: "condicionais" },
-  { id: 5, titulo: "Laços de Repetição", status: "bloqueada", topico: "loops" },
-  { id: 6, titulo: "Funções", status: "bloqueada", topico: "funcoes" },
-  { id: 7, titulo: "Listas e Tuplas", status: "bloqueada", topico: "listas" },
-];
+import { useLessonStore } from "../../../store/licaoStore";
 
 const icones = {
   bloqueada: <FaLock className="text-gray-400" />,
@@ -27,6 +11,7 @@ const icones = {
 
 export const RoadmapPython = () => {
   const navigate = useNavigate();
+  const { licoes } = useLessonStore();
 
   const iniciarTopico = (topico: string) => {
     navigate(`/perguntas/${topico}`);
@@ -45,12 +30,13 @@ export const RoadmapPython = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: licao.id * 0.1 }}
-            className={`flex flex-col items-center justify-center p-4 rounded-xl shadow-md border-2 ${licao.status === "bloqueada"
+            className={`flex flex-col items-center justify-center p-4 rounded-xl shadow-md border-2 ${
+              licao.status === "bloqueada"
                 ? "bg-gray-100 border-gray-300"
                 : licao.status === "disponivel"
-                  ? "bg-blue-50 border-blue-400"
-                  : "bg-green-50 border-green-400"
-              }`}
+                ? "bg-blue-50 border-blue-400"
+                : "bg-green-50 border-green-400"
+            }`}
           >
             <div className="text-3xl mb-2">{icones[licao.status]}</div>
             <span className="text-center font-medium text-gray-700">

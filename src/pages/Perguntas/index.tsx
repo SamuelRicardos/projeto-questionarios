@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaHeart, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import carregamentoGif from "../../assets/carregamento.gif";
 import { useNavigate, useParams } from "react-router-dom";
+import { useLessonStore } from "../../store/licaoStore";
 
 type Question = {
     questao: string;
@@ -30,6 +31,7 @@ export default function Perguntas() {
 
     const token = localStorage.getItem("token");
     const userEmail = localStorage.getItem("email");
+    const { desbloquearProxima } = useLessonStore();
 
     const fetchQuestion = async () => {
         try {
@@ -80,6 +82,11 @@ export default function Perguntas() {
     useEffect(() => {
         if (gameWon) {
             enviarDesempenho(true);
+
+            if (topico) {
+                desbloquearProxima(topico);
+            }
+
             setTimeout(() => {
                 const proximoTopico = obterProximoTopico(topico);
                 if (proximoTopico) {
@@ -91,7 +98,6 @@ export default function Perguntas() {
         }
     }, [gameWon]);
 
-    // Efeito que detecta se o usuário perdeu o jogo (perdeu todas as vidas)
     useEffect(() => {
         if (gameOver) {
             enviarDesempenho(false);
@@ -133,7 +139,6 @@ export default function Perguntas() {
         fetchQuestion();
     };
 
-    // Lista dos tópicos para navegação - atualize conforme seu projeto
     const obterProximoTopico = (atual: string | undefined): string | null => {
         const topicos = ["Introducao", "Variaveis", "Condicionais", "Loops", "Funcoes", "POO"];
         if (!atual) return null;
