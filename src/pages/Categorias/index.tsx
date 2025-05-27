@@ -5,7 +5,7 @@ import {
   FaNetworkWired,
   FaRobot,
 } from "react-icons/fa";
-import { HeaderCategorias } from "../../components/HeaderCategorias";
+import { Sidebar } from "../../components/Sidebar";
 
 const categories = [
   {
@@ -52,10 +52,14 @@ const categories = [
 
 export const Categorias = () => {
   return (
-    <>
-    <HeaderCategorias/>
-      <div className="min-h-screen flex flex-col items-center bg-gray-100 py-5">
-        <h1 className="text-3xl font-bold mb-8 text-gray-800">Tecnologia da informação</h1>
+    <div className="flex min-h-screen bg-gray-100">
+
+      <Sidebar />
+
+      <div className="flex flex-col flex-1/2 items-center py-5">
+        <h1 className="text-3xl font-bold mb-8 text-gray-800">
+          Tecnologia da informação
+        </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-[80%] px-3 md:px-10">
           {categories.map((category) => (
             <div
@@ -77,6 +81,6 @@ export const Categorias = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
