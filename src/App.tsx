@@ -11,6 +11,7 @@ import { RoadmapPython } from "./pages/Roadmap/Python";
 import { RoadmapJava } from "./pages/Roadmap/Java";
 import { RoadmapCsharp } from "./pages/Roadmap/Csharp";
 import { Dashboard } from "./pages/Dashboard";
+import { Ranking } from "./pages/Ranking";
 
 export default function App() {
 
@@ -58,6 +59,10 @@ export default function App() {
     {
       path: "/dashboard",
       element: <Dashboard />
+    },
+    {
+      path: "/ranking",
+      element: <Ranking />
     }
   ]);
 

@@ -7,6 +7,8 @@ import {
   FaUserCircle,
   FaTrophy,
   FaChartBar,
+  FaBars,
+  FaTimes,
 } from "react-icons/fa";
 import { useThemeStore } from "../store/themeStore";
 
@@ -20,7 +22,8 @@ const menuItems = [
 
 export const Sidebar = () => {
   const [user, setUser] = useState<{ nome: string; email: string } | null>(null);
-  const theme = useThemeStore((state: { theme: any; }) => state.theme);
+  const [isOpen, setIsOpen] = useState(false);
+  const theme = useThemeStore((state: { theme: any }) => state.theme);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -29,11 +32,14 @@ export const Sidebar = () => {
       if (!token) return;
 
       try {
-        const response = await axios.get(`http://localhost:8080/auth/profile?email=${email}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `http://localhost:8080/auth/profile?email=${email}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setUser(response.data);
       } catch (error) {
         console.error("Erro ao buscar perfil do usuário:", error);
@@ -43,62 +49,105 @@ export const Sidebar = () => {
     fetchUserProfile();
   }, []);
 
+  const toggleSidebar = () => setIsOpen(!isOpen);
+
   return (
-    <aside
-      className={`flex flex-col w-64 h-screen border-r shadow-lg sticky top-0
-        ${theme === "dark"
-          ? "bg-gray-900 border-gray-700 text-gray-100"
-          : "bg-white border-gray-200 text-gray-800"
-        }
-      `}
-      aria-label="Sidebar principal"
-    >
-      <div
-        className={`flex items-center gap-4 p-4 border-b
-          ${theme === "dark" ? "border-gray-700" : "border-gray-200"}
-        `}
+    <>
+      <button
+        aria-label="Abrir menu"
+        aria-expanded={isOpen}
+        aria-controls="sidebar"
+        onClick={toggleSidebar}
+        className={`fixed top-4 left-4 z-50 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-1 ${
+          theme === "dark"
+            ? "bg-gray-800 text-gray-100 focus:ring-blue-400 focus:ring-offset-gray-900"
+            : "bg-white text-gray-800 focus:ring-blue-500 focus:ring-offset-white shadow-md"
+        } md:hidden`}
       >
-        <div className="w-12 h-12 rounded-full flex items-center justify-center">
-          <FaUserCircle className={`${theme === "dark" ? "text-gray-400" : "text-gray-500"} text-3xl`} />
-        </div>
-        <div>
-          <p className="text-lg font-semibold truncate whitespace-nowrap overflow-hidden max-w-[140px]">
-            {user ? user.nome : "Carregando..."}
-          </p>
-          <p className={`${theme === "dark" ? "text-gray-400" : "text-gray-500"} text-sm`}>
-            Estudante
-          </p>
-        </div>
-      </div>
+        {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+      </button>
 
-      <nav className="flex flex-col flex-grow mt-4" role="menu">
-        {menuItems.map(({ id, label, icon, href }) => (
-          <a
-            key={id}
-            href={href}
-            role="menuitem"
-            tabIndex={0}
-            className={`flex items-center gap-3 px-6 py-3 rounded-md cursor-pointer transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1
-              ${
-                theme === "dark"
-                  ? "text-gray-300 hover:bg-gray-700 hover:text-white focus:ring-blue-400 focus:ring-offset-gray-900"
-                  : "text-gray-700 hover:bg-blue-100 hover:text-blue-700 focus:ring-blue-500 focus:ring-offset-white"
-              }
-            `}
-          >
-            <span className="text-lg">{icon}</span>
-            <span className="text-md font-medium">{label}</span>
-          </a>
-        ))}
-      </nav>
-
-      <div
-        className={`p-4 border-t text-center text-sm
-          ${theme === "dark" ? "border-gray-700 text-gray-400" : "border-gray-200 text-gray-400"}
+      <aside
+        id="sidebar"
+        className={`
+          fixed top-0 left-0 h-full w-64 border-r shadow-lg
+          transform bg-white dark:bg-gray-900 dark:border-gray-700 text-gray-800 dark:text-gray-100
+          transition-transform duration-300 ease-in-out
+          z-40
+          ${
+            isOpen
+              ? "translate-x-0"
+              : "-translate-x-full"
+          }
+          md:translate-x-0 md:static md:flex md:flex-col md:w-64 md:h-screen md:border-r md:shadow-lg
         `}
+        aria-label="Sidebar principal"
       >
-        © 2025 Sua Plataforma
-      </div>
-    </aside>
+        <div
+          className={`flex items-center gap-4 p-4 border-b
+            ${theme === "dark" ? "border-gray-700" : "border-gray-200"}
+          `}
+        >
+          <div className="w-12 h-12 rounded-full flex items-center justify-center">
+            <FaUserCircle
+              className={`${
+                theme === "dark" ? "text-gray-400" : "text-gray-500"
+              } text-3xl`}
+            />
+          </div>
+          <div>
+            <p className="text-lg font-semibold truncate whitespace-nowrap overflow-hidden max-w-[140px]">
+              {user ? user.nome : "Carregando..."}
+            </p>
+            <p
+              className={`${
+                theme === "dark" ? "text-gray-400" : "text-gray-500"
+              } text-sm`}
+            >
+              Estudante
+            </p>
+          </div>
+        </div>
+
+        <nav className="flex flex-col flex-grow mt-4" role="menu">
+          {menuItems.map(({ id, label, icon, href }) => (
+            <a
+              key={id}
+              href={href}
+              role="menuitem"
+              tabIndex={0}
+              onClick={() => setIsOpen(false)}
+              className={`flex items-center gap-3 px-6 py-3 rounded-md cursor-pointer transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1
+                ${
+                  theme === "dark"
+                    ? "text-gray-300 hover:bg-gray-700 hover:text-white focus:ring-blue-400 focus:ring-offset-gray-900"
+                    : "text-gray-700 hover:bg-blue-100 hover:text-blue-700 focus:ring-blue-500 focus:ring-offset-white"
+                }
+              `}
+            >
+              <span className="text-lg">{icon}</span>
+              <span className="text-md font-medium">{label}</span>
+            </a>
+          ))}
+        </nav>
+
+        <div
+          className={`p-4 border-t text-center text-sm
+            ${theme === "dark" ? "border-gray-700 text-gray-400" : "border-gray-200 text-gray-400"}
+          `}
+        >
+          © 2025 Sua Plataforma
+        </div>
+      </aside>
+
+      {/* Fundo escuro quando sidebar aberta no mobile */}
+      {isOpen && (
+        <div
+          onClick={toggleSidebar}
+          className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+          aria-hidden="true"
+        />
+      )}
+    </>
   );
 };
