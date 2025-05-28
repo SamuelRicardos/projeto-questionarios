@@ -66,27 +66,19 @@ export const Sidebar = () => {
       >
         {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
       </button>
-
       <aside
         id="sidebar"
-        className={`
-          fixed top-0 left-0 h-full w-64 border-r shadow-lg
-          transform bg-white dark:bg-gray-900 dark:border-gray-700 text-gray-800 dark:text-gray-100
-          transition-transform duration-300 ease-in-out
-          z-40
-          ${
-            isOpen
-              ? "translate-x-0"
-              : "-translate-x-full"
-          }
-          md:translate-x-0 md:static md:flex md:flex-col md:w-64 md:h-screen md:border-r md:shadow-lg
-        `}
+        style={{ height: "100vh" }} // altura fixa na viewport
+        className="sticky top-0 w-64 border-r shadow-lg
+      bg-white dark:bg-gray-900 dark:border-gray-700 text-gray-800 dark:text-gray-100
+      flex flex-col"
         aria-label="Sidebar principal"
       >
+        {/* Header */}
         <div
-          className={`flex items-center gap-4 p-4 border-b
-            ${theme === "dark" ? "border-gray-700" : "border-gray-200"}
-          `}
+          className={`flex items-center gap-4 p-4 border-b ${
+            theme === "dark" ? "border-gray-700" : "border-gray-200"
+          } flex-shrink-0`}
         >
           <div className="w-12 h-12 rounded-full flex items-center justify-center">
             <FaUserCircle
@@ -109,7 +101,8 @@ export const Sidebar = () => {
           </div>
         </div>
 
-        <nav className="flex flex-col flex-grow mt-4" role="menu">
+        {/* Nav com scroll */}
+        <nav className="flex-grow overflow-y-auto mt-4 px-2" role="menu">
           {menuItems.map(({ id, label, icon, href }) => (
             <a
               key={id}
@@ -117,13 +110,11 @@ export const Sidebar = () => {
               role="menuitem"
               tabIndex={0}
               onClick={() => setIsOpen(false)}
-              className={`flex items-center gap-3 px-6 py-3 rounded-md cursor-pointer transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1
-                ${
-                  theme === "dark"
-                    ? "text-gray-300 hover:bg-gray-700 hover:text-white focus:ring-blue-400 focus:ring-offset-gray-900"
-                    : "text-gray-700 hover:bg-blue-100 hover:text-blue-700 focus:ring-blue-500 focus:ring-offset-white"
-                }
-              `}
+              className={`flex items-center gap-3 px-4 py-3 rounded-md cursor-pointer transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 ${
+                theme === "dark"
+                  ? "text-gray-300 hover:bg-gray-700 hover:text-white focus:ring-blue-400 focus:ring-offset-gray-900"
+                  : "text-gray-700 hover:bg-blue-100 hover:text-blue-700 focus:ring-blue-500 focus:ring-offset-white"
+              }`}
             >
               <span className="text-lg">{icon}</span>
               <span className="text-md font-medium">{label}</span>
@@ -131,10 +122,13 @@ export const Sidebar = () => {
           ))}
         </nav>
 
+        {/* Footer fixo embaixo */}
         <div
-          className={`p-4 border-t text-center text-sm
-            ${theme === "dark" ? "border-gray-700 text-gray-400" : "border-gray-200 text-gray-400"}
-          `}
+          className={`p-4 border-t text-center text-sm flex-shrink-0 ${
+            theme === "dark"
+              ? "border-gray-700 text-gray-400"
+              : "border-gray-200 text-gray-400"
+          }`}
         >
           © 2025 Sua Plataforma
         </div>

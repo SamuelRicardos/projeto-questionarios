@@ -10,11 +10,11 @@ export const Categorias = () => {
 
   const containerClasses = `flex min-h-screen ${isDark ? "bg-gray-900 text-gray-100" : "bg-[#faf7ed] text-gray-800"}`;
 
-  const cardClasses = `p-6 rounded-2xl shadow-2xl transition-transform duration-300 hover:scale-105 cursor-pointer border 
-    ${isDark
-      ? "bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e40af] text-white border-blue-500/20 hover:shadow-blue-500/30"
-      : "bg-gradient-to-br from-[#edf2f7] via-[#e6f0fa] to-[#d9e2ec] border-none"
-    }`;
+const cardClasses = `p-6 rounded-2xl shadow-md transition-transform duration-300 hover:scale-105 cursor-pointer border
+  ${isDark
+    ? "bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e40af] text-white border-blue-500/20 hover:shadow-blue-500/30"
+    : "bg-white text-gray-900 border-gray-200 hover:bg-gray-100 hover:shadow-md"
+  }`;
 
   const titleClasses = `${isDark ? "text-white" : "text-gray-900"}`;
   const paragraphClasses = `${isDark ? "text-gray-300" : "text-gray-600"} text-sm text-center`;
@@ -33,7 +33,7 @@ export const Categorias = () => {
       <BotaoTema />
       <div className={`flex flex-col items-center py-10 flex-1 transition-colors duration-300 ${isDark
         ? "bg-gradient-to-br from-[#1f2937] via-[#0f172a] to-[#11255b]"
-        : "bg-gradient-to-br from-[#f0e8d9] via-[#fff] to-[#e6e4d8]"
+        : "bg-gradient-to-br bg-gray-50"
         }`}>
         <h1 className={`text-4xl font-bold mb-10 text-center transition-colors duration-300 ${isDark ? "text-white" : "text-gray-900"
           }`}>
