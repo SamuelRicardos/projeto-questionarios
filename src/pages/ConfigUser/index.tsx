@@ -56,7 +56,7 @@ export const ConfigUser = () => {
     ];
 
     return (
-        <div className="flex min-h-screen w-full bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+        <div className="flex min-h-screen w-full bg-gray-100 dark:bg-gradient-to-br from-[#1f2937] via-[#0f172a] to-[#11255b] transition-colors duration-300">
             <Sidebar />
             <BotaoTema />
             <main className="flex-1 max-w-4xl mx-auto p-6 mt-12 bg-white dark:bg-gray-800 rounded-xl shadow-md transition-colors duration-300">
