@@ -42,7 +42,11 @@ const CirculoAcertos = ({
       className={`
         flex flex-col items-center justify-center p-6 rounded-3xl
         shadow-md transition-colors duration-300
-        ${isDark ? "bg-gradient-to-tr from-gray-700 via-gray-800 to-gray-900 text-teal-400" : "bg-gradient-to-tr bg-white text-blue-900"}
+        ${
+          isDark
+            ? "bg-gradient-to-tr from-gray-700 via-gray-800 to-gray-900 text-teal-400"
+            : "bg-gradient-to-tr bg-white text-blue-900"
+        }
         hover:scale-[1.05] hover:shadow-lg
         cursor-default
       `}
@@ -64,11 +68,18 @@ const CirculoAcertos = ({
 };
 
 export const Dashboard = () => {
-  const { theme } = useThemeStore();
+  const { theme, hasHydrated } = useThemeStore();
   const isDark = theme === "dark";
 
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
+
+  // ✅ Aplica a classe "dark" ao <html> apenas após a hidratação
+  useEffect(() => {
+    if (hasHydrated) {
+      document.documentElement.classList.toggle("dark", theme === "dark");
+    }
+  }, [theme, hasHydrated]);
 
   useEffect(() => {
     fetch("http://localhost:8080/auth/profile?email=samuelric4rdo@gmail.com")
@@ -80,26 +91,26 @@ export const Dashboard = () => {
       .catch(() => setLoading(false));
   }, []);
 
-  if (loading || !profile) {
+  if (!hasHydrated || loading || !profile) {
     return (
       <div
         className={`flex items-center justify-center min-h-screen ${
           isDark ? "bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-800"
         }`}
       >
-        <p className="text-lg">{loading ? "Carregando dados..." : "Erro ao carregar perfil."}</p>
+        <p className="text-lg">
+          {!hasHydrated
+            ? "Carregando tema..."
+            : loading
+            ? "Carregando dados..."
+            : "Erro ao carregar perfil."}
+        </p>
       </div>
     );
   }
 
-  const totalVitorias = profile.desempenhos.reduce(
-    (acc, cur) => acc + cur.vitorias,
-    0
-  );
-  const totalDerrotas = profile.desempenhos.reduce(
-    (acc, cur) => acc + cur.derrotas,
-    0
-  );
+  const totalVitorias = profile.desempenhos.reduce((acc, cur) => acc + cur.vitorias, 0);
+  const totalDerrotas = profile.desempenhos.reduce((acc, cur) => acc + cur.derrotas, 0);
 
   const chartData = profile.desempenhos.map((d) => ({
     categoria: d.categoria,
@@ -118,7 +129,11 @@ export const Dashboard = () => {
       .reduce((acc, cur) => acc + cur.vitorias, 0);
 
   return (
-    <div className={`flex min-h-screen ${isDark ? "bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-900"}`}>
+    <div
+      className={`flex min-h-screen ${
+        isDark ? "bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-900"
+      }`}
+    >
       <Sidebar />
       <BotaoTema />
       <main className="flex-grow p-8 max-w-7xl mx-auto space-y-12">
@@ -128,8 +143,9 @@ export const Dashboard = () => {
 
         <div className="flex flex-col lg:flex-row gap-10">
           <section
-            className={`flex-1 p-8 rounded-3xl shadow-xl transition-colors duration-300
-              ${isDark ? "bg-gray-800" : "bg-white"}`}
+            className={`flex-1 p-8 rounded-3xl shadow-xl transition-colors duration-300 ${
+              isDark ? "bg-gray-800" : "bg-white"
+            }`}
           >
             <h2 className="text-2xl font-semibold mb-6 text-center tracking-wide">
               Vitórias e Derrotas por Categoria
@@ -163,8 +179,9 @@ export const Dashboard = () => {
           </section>
 
           <section
-            className={`flex-1 p-8 rounded-3xl shadow-xl transition-colors duration-300
-              ${isDark ? "bg-gray-800" : "bg-white"}`}
+            className={`flex-1 p-8 rounded-3xl shadow-xl transition-colors duration-300 ${
+              isDark ? "bg-gray-800" : "bg-white"
+            }`}
           >
             <h2 className="text-2xl font-semibold mb-6 text-center tracking-wide">
               Desempenho Total (Vitórias vs Derrotas)
