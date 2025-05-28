@@ -10,6 +10,7 @@ import Perguntas from "./pages/Perguntas";
 import { RoadmapPython } from "./pages/Roadmap/Python";
 import { RoadmapJava } from "./pages/Roadmap/Java";
 import { RoadmapCsharp } from "./pages/Roadmap/Csharp";
+import { Dashboard } from "./pages/Dashboard";
 
 export default function App() {
 
@@ -53,6 +54,10 @@ export default function App() {
     {
       path: "/roadmap-csharp",
       element: <RoadmapCsharp/>
+    },
+    {
+      path: "/dashboard",
+      element: <Dashboard />
     }
   ]);
 

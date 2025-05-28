@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { BotaoTema } from "../../components/BotaoTema";
 import { Sidebar } from "../../components/Sidebar";
 import { useThemeStore } from "../../store/themeStore";
+import Python from "../../assets/python.png"
 
 export const Categorias = () => {
   const { theme, hasHydrated } = useThemeStore();
@@ -43,7 +44,7 @@ export const Categorias = () => {
           <a href="/roadmap-python" className={cardClasses}>
             <div className="flex justify-center mb-4">
               <img
-                src="https://w7.pngwing.com/pngs/447/294/png-transparent-python-javascript-logo-clojure-python-logo-blue-angle-text.png"
+                src={Python}
                 alt="Python"
                 className="h-14 w-auto object-contain"
               />

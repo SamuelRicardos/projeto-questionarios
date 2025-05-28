@@ -12,7 +12,7 @@ import { useThemeStore } from "../store/themeStore";
 
 const menuItems = [
   { id: 1, label: "Início", icon: <FaHome />, href: "/categorias" },
-  { id: 2, label: "Dashboard", icon: <FaChartBar />, href: "/cursos" },
+  { id: 2, label: "Dashboard", icon: <FaChartBar />, href: "/dashboard" },
   { id: 3, label: "Ranking", icon: <FaTrophy />, href: "/ranking" },
   { id: 4, label: "Configurações", icon: <FaCog />, href: "/configuracoes" },
   { id: 5, label: "Sair", icon: <FaSignOutAlt />, href: "/logout" },
