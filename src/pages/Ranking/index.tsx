@@ -1,3 +1,4 @@
+import { BotaoTema } from "@/components/BotaoTema";
 import { Sidebar } from "@/components/Sidebar";
 import { FaMedal, FaUserCircle } from "react-icons/fa";
 
@@ -14,6 +15,7 @@ export const Ranking = () => {
     return (
         <div className="flex min-h-screen w-full">
             <Sidebar />
+            <BotaoTema />
             <main className="flex-1 min-h-screen bg-gradient-to-tr from-blue-50 via-white to-blue-100 p-6 flex flex-col items-center">
                 <h1 className="text-center text-2xl md:text-4xl font-extrabold text-blue-900 mb-10 drop-shadow-md w-full max-w-screen-xl px-4">
                     Ranking semanal

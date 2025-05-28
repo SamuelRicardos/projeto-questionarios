@@ -12,6 +12,7 @@ import { RoadmapJava } from "./pages/Roadmap/Java";
 import { RoadmapCsharp } from "./pages/Roadmap/Csharp";
 import { Dashboard } from "./pages/Dashboard";
 import { Ranking } from "./pages/Ranking";
+import { ConfigUser } from "./pages/ConfigUser";
 
 export default function App() {
 
@@ -63,6 +64,10 @@ export default function App() {
     {
       path: "/ranking",
       element: <Ranking />
+    },
+    {
+      path: "/configuracoes",
+      element: <ConfigUser />
     }
   ]);
 
