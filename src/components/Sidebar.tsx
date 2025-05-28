@@ -2,18 +2,20 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import {
   FaHome,
-  FaBook,
   FaCog,
   FaSignOutAlt,
   FaUserCircle,
+  FaTrophy,
+  FaChartBar,
 } from "react-icons/fa";
 import { useThemeStore } from "../store/themeStore";
 
 const menuItems = [
-  { id: 1, label: "Início", icon: <FaHome />, href: "/" },
-  { id: 2, label: "Cursos", icon: <FaBook />, href: "/cursos" },
-  { id: 3, label: "Configurações", icon: <FaCog />, href: "/configuracoes" },
-  { id: 4, label: "Sair", icon: <FaSignOutAlt />, href: "/logout" },
+  { id: 1, label: "Início", icon: <FaHome />, href: "/categorias" },
+  { id: 2, label: "Dashboard", icon: <FaChartBar />, href: "/cursos" },
+  { id: 3, label: "Ranking", icon: <FaTrophy />, href: "/ranking" },
+  { id: 4, label: "Configurações", icon: <FaCog />, href: "/configuracoes" },
+  { id: 5, label: "Sair", icon: <FaSignOutAlt />, href: "/logout" },
 ];
 
 export const Sidebar = () => {

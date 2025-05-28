@@ -1,9 +1,10 @@
+import { useEffect } from "react";
 import { BotaoTema } from "../../components/BotaoTema";
 import { Sidebar } from "../../components/Sidebar";
 import { useThemeStore } from "../../store/themeStore";
 
 export const Categorias = () => {
-  const { theme } = useThemeStore();
+  const { theme, hasHydrated } = useThemeStore();
   const isDark = theme === "dark";
 
   const containerClasses = `flex min-h-screen ${isDark ? "bg-gray-900 text-gray-100" : "bg-[#faf7ed] text-gray-800"}`;
@@ -17,13 +18,21 @@ export const Categorias = () => {
   const titleClasses = `${isDark ? "text-white" : "text-gray-900"}`;
   const paragraphClasses = `${isDark ? "text-gray-300" : "text-gray-600"} text-sm text-center`;
 
+  useEffect(() => {
+    if (hasHydrated) {
+      document.documentElement.classList.toggle("dark", theme === "dark");
+    }
+  }, [theme, hasHydrated]);
+
+  if (!hasHydrated) return null;
+
   return (
     <div className={containerClasses}>
       <Sidebar />
       <BotaoTema />
       <div className={`flex flex-col items-center py-10 flex-1 transition-colors duration-300 ${isDark
-          ? "bg-gradient-to-br from-[#1f2937] via-[#0f172a] to-[#11255b]"
-          : "bg-gradient-to-br from-[#f0e8d9] via-[#fff] to-[#e6e4d8]"
+        ? "bg-gradient-to-br from-[#1f2937] via-[#0f172a] to-[#11255b]"
+        : "bg-gradient-to-br from-[#f0e8d9] via-[#fff] to-[#e6e4d8]"
         }`}>
         <h1 className={`text-4xl font-bold mb-10 text-center transition-colors duration-300 ${isDark ? "text-white" : "text-gray-900"
           }`}>
