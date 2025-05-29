@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FaHeart, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import { FaHeart, FaCheckCircle, FaTimesCircle, FaArrowRight, FaTrophy, FaSadTear, FaRedo, FaMap } from "react-icons/fa";
 import carregamentoGif from "../../assets/carregamento.gif";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLessonStore } from "../../store/licaoStore";
@@ -157,25 +157,40 @@ export default function Perguntas() {
 
     if (gameOver || gameWon)
         return (
-            <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg text-center space-y-4 animate-fadeIn">
-                <div className="text-lg font-semibold text-gray-700">
-                    {gameOver
-                        ? "Você perdeu todas as vidas!"
-                        : "Parabéns! Você concluiu todas as perguntas!"}
+            <div className="max-w-xl mx-auto mt-12 p-8 bg-white rounded-3xl text-center space-y-6 animate-fadeIn">
+                <div className="text-3xl font-bold text-gray-800 flex flex-col justify-center items-center gap-2">
+                    {gameOver ? (
+                        <>
+                            <FaSadTear className="text-red-400 text-5xl animate-pulse" />
+                            <span>Você perdeu todas as vidas!</span>
+                        </>
+                    ) : (
+                        <>
+                            <FaTrophy className="text-yellow-400 text-5xl animate-bounce" />
+                            <span>Parabéns! Você concluiu todas as perguntas!</span>
+                        </>
+                    )}
                 </div>
-                <div className="flex justify-center gap-4 mt-4">
+
+                <div className="text-gray-600 text-sm">
+                    {gameOver
+                        ? "Não foi dessa vez, mas você pode tentar novamente!"
+                        : "Você está avançando muito bem. Continue assim!"}
+                </div>
+
+                <div className="flex justify-center gap-4 mt-6">
                     <button
                         onClick={restart}
-                        className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition cursor-pointer"
+                        className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-xl shadow-md hover:bg-green-700 hover:shadow-lg transition-all active:scale-95 cursor-pointer"
                     >
-                        Jogar novamente
+                        <FaRedo /> Jogar novamente
                     </button>
 
                     <button
                         onClick={() => navigate(`/roadmap-${linguagem}`)}
-                        className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition cursor-pointer"
+                        className="flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-xl shadow-md hover:bg-purple-700 hover:shadow-lg transition-all active:scale-95 cursor-pointer"
                     >
-                        Voltar para o Roadmap
+                        <FaMap /> Voltar para o Roadmap
                     </button>
                 </div>
             </div>
@@ -259,20 +274,21 @@ export default function Perguntas() {
             </div>
 
             {answered && !gameOver && !gameWon && (
-                <div className="flex flex-col items-center space-y-4 animate-fadeIn">
+                <div className=" flex flex-col items-center space-y-4 animate-fadeIn">
 
                     {!isCorrect && question.explicacao && (
                         <div className="text-sm text-gray-700 bg-yellow-100 border border-yellow-400 rounded-md p-3 w-full text-start">
-                            <p><strong>Resposta correta: </strong>{question.questaoCorreta}.</p>
+                            <p><strong>Resposta correta: </strong>{question.questaoCorreta}</p><br/>
                             <p className="text-justify"><strong>Explicação: </strong>{question.explicacao}.</p>
                         </div>
                     )}
 
                     <button
                         onClick={nextQuestion}
-                        className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition cursor-pointer"
+                        className="mt-4 px-5 py-3 bg-blue-600 text-white font-semibold rounded-2xl shadow-md hover:bg-blue-700 hover:shadow-lg active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
                     >
                         Próxima pergunta
+                        <FaArrowRight />
                     </button>
                 </div>
             )}
