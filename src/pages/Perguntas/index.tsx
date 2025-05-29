@@ -260,14 +260,16 @@ export default function Perguntas() {
                             onClick={() => handleAnswer(option)}
                             disabled={answered}
                         >
-                            <span>{option}</span>
-                            {answered && (
-                                isSelected && !correct ? (
-                                    <FaTimesCircle className="ml-2 text-red-500" />
-                                ) : correct ? (
-                                    <FaCheckCircle className="ml-2 text-green-500" />
-                                ) : null
-                            )}
+                            <div className="flex items-center w-full gap-2">
+                                <span className="flex-1 text-left break-words">{option}</span>
+                                {answered && (
+                                    isSelected && !correct ? (
+                                        <FaTimesCircle className="flex-shrink-0 text-red-500 text-xl" />
+                                    ) : correct ? (
+                                        <FaCheckCircle className="flex-shrink-0 text-green-500 text-xl" />
+                                    ) : null
+                                )}
+                            </div>
                         </button>
                     );
                 })}
@@ -278,7 +280,7 @@ export default function Perguntas() {
 
                     {!isCorrect && question.explicacao && (
                         <div className="text-sm text-gray-700 bg-yellow-100 border border-yellow-400 rounded-md p-3 w-full text-start">
-                            <p><strong>Resposta correta: </strong>{question.questaoCorreta}</p><br/>
+                            <p><strong>Resposta correta: </strong>{question.questaoCorreta}</p><br />
                             <p className="text-justify"><strong>Explicação: </strong>{question.explicacao}.</p>
                         </div>
                     )}
