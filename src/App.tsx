@@ -46,15 +46,15 @@ export default function App() {
       element: <Perguntas />
     },
     {
-      path: "/roadmap-python",
+      path: "/roadmap-python-basico",
       element: <RoadmapPython/>
     },
     {
-      path: "/roadmap-java",
+      path: "/roadmap-java-basico",
       element: <RoadmapJava/>
     },
     {
-      path: "/roadmap-csharp",
+      path: "/roadmap-csharp-basico",
       element: <RoadmapCsharp/>
     },
     {

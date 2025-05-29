@@ -64,7 +64,6 @@ export const ConfigUser = () => {
                     Meu Perfil
                 </h1>
 
-                {/* Perfil */}
                 <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-10">
                     <div className="relative w-32 h-32">
                         <img
