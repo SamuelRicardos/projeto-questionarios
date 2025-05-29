@@ -30,10 +30,6 @@ export const RoadmapCsharp = () => {
     navigate(`/perguntas/csharp/${topico}`);
   };
 
-  const progresso = Math.round(
-    (licoes.filter((l) => l.status === "concluida").length / licoes.length) * 100
-  );
-
   return (
     <div className="min-h-screen py-10 px-4 bg-gradient-to-tr from-gray-100 via-white to-gray-100 text-gray-800 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 dark:text-white transition-colors duration-300">
       <BotaoTema />
@@ -84,19 +80,6 @@ export const RoadmapCsharp = () => {
               <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-blue-400 transition duration-300 pointer-events-none"></div>
             </motion.div>
           ))}
-        </div>
-
-        <div className="mt-12 text-center">
-          <p className="text-lg font-medium mb-2">Progresso no C#:</p>
-          <div className="w-full bg-gray-300 dark:bg-zinc-700 rounded-full h-4 overflow-hidden">
-            <motion.div
-              className="bg-green-500 h-4"
-              initial={{ width: 0 }}
-              animate={{ width: `${progresso}%` }}
-              transition={{ duration: 1 }}
-            />
-          </div>
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{progresso}% concluído</p>
         </div>
       </div>
     </div>

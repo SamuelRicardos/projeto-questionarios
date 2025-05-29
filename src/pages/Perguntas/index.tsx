@@ -14,7 +14,7 @@ type Question = {
 };
 
 export default function Perguntas() {
-    const MAX_LIVES = 3;
+    const MAX_LIVES = 10;
     const MAX_QUESTIONS = 5;
     const navigate = useNavigate();
 

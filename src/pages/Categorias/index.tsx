@@ -59,21 +59,21 @@ export const Categorias = () => {
               description="Comece sua jornada com Python, linguagem versátil e poderosa."
               progress={80}
               icon={<FaPython />}
-              link="/roadmap-python-basico"
+              link="/roadmap-python"
             />
             <Card
               title="Java (Básico)"
               description="Inicie em Java, uma linguagem robusta e muito usada no mercado."
               progress={30}
               icon={<FaJava />}
-              link="/roadmap-java-basico"
+              link="/roadmap-java"
             />
             <Card
               title="C# (Básico)"
               description="Descubra os fundamentos de C# com foco em aplicações práticas."
               progress={45}
               icon={<TbBrandCSharp />}
-              link="/roadmap-csharp-basico"
+              link="/roadmap-csharp"
             />
           </div>
         </section>
