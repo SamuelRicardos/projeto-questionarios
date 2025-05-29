@@ -74,7 +74,6 @@ export const Dashboard = () => {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Aplica a classe "dark" ao <html> apenas após a hidratação
   useEffect(() => {
     if (hasHydrated) {
       document.documentElement.classList.toggle("dark", theme === "dark");
