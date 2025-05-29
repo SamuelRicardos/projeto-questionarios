@@ -131,7 +131,7 @@ export const Dashboard = () => {
   return (
     <div
       className={`flex min-h-screen ${
-        isDark ? "bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-900"
+        isDark ? "bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#172e79] text-gray-100" : "bg-gray-50 text-gray-900"
       }`}
     >
       <Sidebar />
