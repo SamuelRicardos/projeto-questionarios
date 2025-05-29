@@ -4,6 +4,7 @@ import { Sidebar } from "../../components/Sidebar";
 import { useThemeStore } from "../../store/themeStore";
 import { FaPython, FaJava } from "react-icons/fa";
 import { TbBrandCSharp } from "react-icons/tb";
+import { ProgressBar } from "../../components/Progresso";
 
 export const Categorias = () => {
   const { theme, hasHydrated } = useThemeStore();
@@ -26,18 +27,12 @@ export const Categorias = () => {
 
   if (!hasHydrated) return null;
 
-  const Card = ({ title, description, progress, icon, link }: any) => (
+  const Card = ({ title, description, linguagem, icon, link }: any) => (
     <a href={link} className={cardClasses}>
       <div className="flex justify-center mb-4 text-5xl text-blue-500">{icon}</div>
       <h2 className={`text-center text-xl font-semibold mb-2 ${titleClasses}`}>{title}</h2>
       <p className={paragraphClasses}>{description}</p>
-      <div className="mt-4 w-full bg-gray-300 dark:bg-gray-700 rounded-full h-3">
-        <div
-          className={`h-3 rounded-full transition-all duration-500 ${isDark ? "bg-[#9f00ff]" : "bg-green-500"}`}
-          style={{ width: `${progress}%` }}
-        />
-      </div>
-      <p className="text-xs text-center mt-1 text-gray-400">{progress}% concluído</p>
+      <ProgressBar linguagem={linguagem} />
     </a>
   );
 
@@ -57,21 +52,21 @@ export const Categorias = () => {
             <Card
               title="Python (Básico)"
               description="Comece sua jornada com Python, linguagem versátil e poderosa."
-              progress={80}
+              linguagem="Python"
               icon={<FaPython />}
               link="/roadmap-python"
             />
             <Card
               title="Java (Básico)"
               description="Inicie em Java, uma linguagem robusta e muito usada no mercado."
-              progress={30}
+              linguagem="Java"
               icon={<FaJava />}
               link="/roadmap-java"
             />
             <Card
               title="C# (Básico)"
               description="Descubra os fundamentos de C# com foco em aplicações práticas."
-              progress={45}
+              linguagem="C#"
               icon={<TbBrandCSharp />}
               link="/roadmap-csharp"
             />
@@ -84,21 +79,21 @@ export const Categorias = () => {
             <Card
               title="Python (Intermediário)"
               description="Aprofunde seus conhecimentos com estruturas mais avançadas."
-              progress={60}
+              linguagem="PythonIntermediario"
               icon={<FaPython />}
               link="/roadmap-python-intermediario"
             />
             <Card
               title="Java (Intermediário)"
               description="Explore conceitos como orientação a objetos e frameworks."
-              progress={50}
+              linguagem="JavaIntermediario"
               icon={<FaJava />}
               link="/roadmap-java-intermediario"
             />
             <Card
               title="C# (Intermediário)"
               description="Aprenda recursos intermediários do C# com exemplos práticos."
-              progress={40}
+              linguagem="C#Intermediario"
               icon={<TbBrandCSharp />}
               link="/roadmap-csharp-intermediario"
             />
@@ -109,23 +104,23 @@ export const Categorias = () => {
           <h2 className="text-2xl font-semibold mb-6 text-center">Nível Avançado</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             <Card
-              title="Python (Avançado)"
+              title="PythonAvancado"
               description="Domine Python com tópicos como automação, APIs e mais."
-              progress={25}
+              linguagem="PythonAvancado"
               icon={<FaPython />}
               link="/roadmap-python-avancado"
             />
             <Card
               title="Java (Avançado)"
               description="Torne-se um expert em Java com tópicos avançados e arquitetura."
-              progress={15}
+              linguagem="JavaAvancado"
               icon={<FaJava />}
               link="/roadmap-java-avancado"
             />
             <Card
               title="C# (Avançado)"
               description="Explore o potencial máximo do C# em projetos robustos."
-              progress={20}
+              linguagem="C#Avancado"
               icon={<TbBrandCSharp />}
               link="/roadmap-csharp-avancado"
             />

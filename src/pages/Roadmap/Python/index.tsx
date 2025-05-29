@@ -35,7 +35,7 @@ export const RoadmapPython = () => {
     <div className="min-h-screen py-10 px-4 bg-gradient-to-tr from-gray-100 via-white to-gray-100 text-gray-800 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 dark:text-white transition-colors duration-300">
       <BotaoTema />
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-4xl sm:text-5xl font-bold text-center mb-10 tracking-tight">
+        <h1 className="text-4xl sm:text-5xl font-bold text-center mb-7 tracking-tight">
           Roadmap Python 🐍
           <span className="block w-20 h-1 bg-blue-500 mx-auto mt-2 rounded animate-pulse"></span>
         </h1>
@@ -50,10 +50,9 @@ export const RoadmapPython = () => {
                 transition={{ delay: licao.id * 0.1 }}
                 whileHover={{ scale: 1.05, rotate: 1 }}
                 className={`relative group p-6 rounded-2xl shadow-md border transition-all duration-300
-                  ${
-                    licao.status === "bloqueada"
-                      ? "bg-gray-200 border-gray-300 dark:bg-zinc-700/60 dark:border-zinc-600"
-                      : licao.status === "disponivel"
+                  ${licao.status === "bloqueada"
+                    ? "bg-gray-200 border-gray-300 dark:bg-zinc-700/60 dark:border-zinc-600"
+                    : licao.status === "disponivel"
                       ? "bg-blue-100 border-blue-400 dark:bg-blue-600/20 dark:border-blue-400"
                       : "bg-green-100 border-green-400 dark:bg-green-600/20 dark:border-green-400"
                   }
@@ -88,5 +87,6 @@ export const RoadmapPython = () => {
         </div>
       </div>
     </div>
+
   );
 };
