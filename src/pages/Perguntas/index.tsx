@@ -14,7 +14,7 @@ type Question = {
 };
 
 export default function Perguntas() {
-    const MAX_LIVES = 10;
+    const MAX_LIVES = 3;
     const MAX_QUESTIONS = 5;
     const navigate = useNavigate();
 
@@ -223,13 +223,15 @@ export default function Perguntas() {
                     const correct = question.questaoCorreta === option;
 
                     let style =
-                        "w-full px-4 py-3 rounded-lg border transition-all duration-300 ease-in-out text-left";
+                        "w-full px-4 py-3 rounded-lg border transition-all duration-300 ease-in-out text-left flex justify-between items-center";
 
                     if (answered) {
                         if (isSelected && correct)
                             style += " bg-green-100 border-green-500 text-green-800 scale-105 shadow-lg";
                         else if (isSelected && !correct)
                             style += " bg-red-100 border-red-500 text-red-800 scale-105 shadow-lg";
+                        else if (correct)
+                            style += " bg-green-50 border-green-300 text-green-700";
                         else
                             style += " bg-gray-50 border-gray-300 opacity-70";
                     } else {
@@ -243,7 +245,14 @@ export default function Perguntas() {
                             onClick={() => handleAnswer(option)}
                             disabled={answered}
                         >
-                            {option}
+                            <span>{option}</span>
+                            {answered && (
+                                isSelected && !correct ? (
+                                    <FaTimesCircle className="ml-2 text-red-500" />
+                                ) : correct ? (
+                                    <FaCheckCircle className="ml-2 text-green-500" />
+                                ) : null
+                            )}
                         </button>
                     );
                 })}
@@ -251,17 +260,6 @@ export default function Perguntas() {
 
             {answered && !gameOver && !gameWon && (
                 <div className="flex flex-col items-center space-y-4 animate-fadeIn">
-                    <div className="flex items-center gap-2 text-lg font-medium">
-                        {isCorrect ? (
-                            <>
-                                <FaCheckCircle className="text-green-500" /> Resposta correta!
-                            </>
-                        ) : (
-                            <>
-                                <FaTimesCircle className="text-red-500" /> Resposta incorreta
-                            </>
-                        )}
-                    </div>
 
                     {!isCorrect && question.explicacao && (
                         <div className="text-sm text-gray-700 bg-yellow-100 border border-yellow-400 rounded-md p-3 w-full text-start">
