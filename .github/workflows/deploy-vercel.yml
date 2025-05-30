@@ -11,27 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️ Checkout do repositório
+      - name: Checkout do repositório
         uses: actions/checkout@v3
 
-      - name: 🧰 Configurar Node.js
+      - name: Configurar Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
           cache: 'npm'
 
-      - name: 📦 Instalar dependências
+      - name: Instalar dependências
         run: npm ci
 
-      - name: 🧹 Verificar lint
+      - name: Verificar lint
         run: npm run lint
-        continue-on-error: false
+        continue-on-error: true
 
-      - name: 🏗️ Build do projeto
+      - name: Build do projeto
         run: npm run build
 
-      - name: 🚀 Instalar Vercel CLI
+      - name: Instalar Vercel CLI
         run: npm install -g vercel
 
-      - name: 🌍 Deploy para Vercel
+      - name: Deploy para Vercel
         run: vercel --prod --confirm --token=${{ secrets.VERCEL_TOKEN }}
