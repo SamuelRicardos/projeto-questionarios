@@ -100,7 +100,7 @@ export const ConfigUser = () => {
                             <div
                                 key={i}
                                 className={`relative flex items-center gap-4 p-4 rounded-xl border-2 ${badge.border} ${badge.bg} dark:bg-gray-700 shadow hover:scale-[1.03] transition-transform`}
-                                title={.description}
+                                title={badge.description}
                             >
                                 {badge.icon}
                                 <div>
