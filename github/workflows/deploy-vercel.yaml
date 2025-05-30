@@ -3,7 +3,8 @@ name: Deploy para Vercel
 on:
   push:
     branches:
-      - main  # Altere para o nome do seu branch principal, se necessário
+      - main
+      - feature/teste
 
 jobs:
   deploy:
