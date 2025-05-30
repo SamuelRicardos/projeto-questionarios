@@ -25,7 +25,7 @@ jobs:
 
       - name: 🧹 Verificar lint
         run: npm run lint
-        continue-on-error: true
+        continue-on-error: false
 
       - name: 🏗️ Build do projeto
         run: npm run build
