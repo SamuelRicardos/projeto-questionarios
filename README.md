@@ -2,20 +2,22 @@
 
 Este é um projeto de Frontend para uma aplicação de questionários interativos, desenvolvida em **React** e estilizada com **TailwindCSS**.
 
+Link do back-end:
+https://github.com/SamuelRicardos/questionario-back
+
 ## 🔥 Funcionalidades
 
 * Tela de Login
 * Tela de Cadastro
 * Tela de Redefinição de Senha
 * Home de apresentação
-* Navegação responsiva ( em desenvolvimento )
+* Navegação responsiva
 
 ## 🚀 Tecnologias Utilizadas
 
 * **React e Vite**
 * **TailwindCSS**
 * **React Router Dom**
-* **Lyro IA**
 
 ## 📂 Estrutura do Projeto
 
@@ -56,7 +58,3 @@ A aplicação estará disponível em **[http://localhost:5173](http://localhost:
 * **/cadastro** - Tela de Cadastro
 * **/reset-password** - Tela de Redefinição de Senha
 * **/** - Página principal com categorias de questionários
-
-## 💬 Chatbot Integrado
-
-O projeto está preparado para integração com um chatbot utilizando Lyro IA da Tidio
