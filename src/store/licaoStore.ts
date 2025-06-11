@@ -45,6 +45,24 @@ export const topicosOrdenadosPorLinguagem: Record<string, string[]> = {
     "Métodos e Funções",
     "Programação Orientada a Objetos",
   ],
+  javascript: [
+    "Introdução ao JavaScript",
+    "Variáveis e Tipos",
+    "Operadores",
+    "Condicionais",
+    "Laços de Repetição",
+    "Funções",
+    "Objetos e Arrays",
+  ],
+  php: [
+    "Introdução ao PHP",
+    "Variáveis e Tipos",
+    "Operadores",
+    "Condicionais",
+    "Laços de Repetição",
+    "Funções",
+    "Arrays e Superglobais",
+  ],
 };
 
 export const useLessonStore = create<LessonStore>()(
@@ -78,7 +96,24 @@ export const useLessonStore = create<LessonStore>()(
           { id: 6, titulo: "Métodos e Funções", status: "bloqueada", topico: "Métodos e Funções" },
           { id: 7, titulo: "Programação Orientada a Objetos", status: "bloqueada", topico: "Programação Orientada a Objetos" },
         ],
-
+        javascript: [
+          { id: 1, titulo: "Introdução ao JavaScript", status: "disponivel", topico: "Introdução ao JavaScript" },
+          { id: 2, titulo: "Variáveis e Tipos", status: "bloqueada", topico: "Variáveis e Tipos" },
+          { id: 3, titulo: "Operadores", status: "bloqueada", topico: "Operadores" },
+          { id: 4, titulo: "Condicionais", status: "bloqueada", topico: "Condicionais" },
+          { id: 5, titulo: "Laços de Repetição", status: "bloqueada", topico: "Laços de Repetição" },
+          { id: 6, titulo: "Funções", status: "bloqueada", topico: "Funções" },
+          { id: 7, titulo: "Objetos e Arrays", status: "bloqueada", topico: "Objetos e Arrays" },
+       ],
+        php: [
+          { id: 1, titulo: "Introdução ao PHP", status: "disponivel", topico: "Introdução ao PHP" },
+          { id: 2, titulo: "Variáveis e Tipos", status: "bloqueada", topico: "Variáveis e Tipos" },
+          { id: 3, titulo: "Operadores", status: "bloqueada", topico: "Operadores" },
+          { id: 4, titulo: "Condicionais", status: "bloqueada", topico: "Condicionais" },
+          { id: 5, titulo: "Laços de Repetição", status: "bloqueada", topico: "Laços de Repetição" },
+          { id: 6, titulo: "Funções", status: "bloqueada", topico: "Funções" },
+          { id: 7, titulo: "Arrays e Superglobais", status: "bloqueada", topico: "Arrays e Superglobais" },
+        ],
       },
 
       atualizarStatus: (linguagem, topico, novoStatus) =>

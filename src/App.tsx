@@ -1,4 +1,4 @@
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import { useEffect } from "react";
 import Login from "./pages/Login";
@@ -13,13 +13,15 @@ import { RoadmapCsharp } from "./pages/Roadmap/Csharp";
 import { Dashboard } from "./pages/Dashboard";
 import { Ranking } from "./pages/Ranking";
 import { ConfigUser } from "./pages/ConfigUser";
+import { RoadmapJS } from "./pages/Roadmap/JS";
+import { RoadmapPHP } from "./pages/Roadmap/php";
 
 export default function App() {
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home/>,
+      element: <Home />,
     },
     {
       path: "/login",
@@ -39,7 +41,7 @@ export default function App() {
     },
     {
       path: "/categorias",
-      element: <Categorias/>
+      element: <Categorias />
     },
     {
       path: "/perguntas/:linguagem/:topico",
@@ -47,15 +49,23 @@ export default function App() {
     },
     {
       path: "/roadmap-python",
-      element: <RoadmapPython/>
+      element: <RoadmapPython />
     },
     {
       path: "/roadmap-java",
-      element: <RoadmapJava/>
+      element: <RoadmapJava />
     },
     {
       path: "/roadmap-csharp",
-      element: <RoadmapCsharp/>
+      element: <RoadmapCsharp />
+    },
+    {
+      path: "/roadmap-javascript",
+      element: <RoadmapJS />
+    },
+    {
+      path: "/roadmap-php",
+      element: <RoadmapPHP />
     },
     {
       path: "/dashboard",

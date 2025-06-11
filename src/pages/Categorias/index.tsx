@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { BotaoTema } from "../../components/BotaoTema";
 import { Sidebar } from "../../components/Sidebar";
 import { useThemeStore } from "../../store/themeStore";
-import { FaPython, FaJava } from "react-icons/fa";
+import { FaPython, FaJava, FaJs, FaPhp } from "react-icons/fa";
 import { TbBrandCSharp } from "react-icons/tb";
 import { ProgressBar } from "../../components/Progresso";
 
@@ -47,82 +47,41 @@ export const Categorias = () => {
         <h1 className="text-4xl font-bold mb-10 text-center">Escolha a sua linguagem!</h1>
 
         <section className="w-full px-4 max-w-6xl mb-12">
-          <h2 className="text-2xl font-semibold mb-6 text-center">Nível Básico</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             <Card
-              title="Python (Básico)"
+              title="Python"
               description="Comece sua jornada com Python, linguagem versátil e poderosa."
               linguagem="Python"
               icon={<FaPython />}
               link="/roadmap-python"
             />
             <Card
-              title="Java (Básico)"
+              title="Java"
               description="Inicie em Java, uma linguagem robusta e muito usada no mercado."
               linguagem="Java"
               icon={<FaJava />}
               link="/roadmap-java"
             />
             <Card
-              title="C# (Básico)"
+              title="C#"
               description="Descubra os fundamentos de C# com foco em aplicações práticas."
               linguagem="C#"
               icon={<TbBrandCSharp />}
               link="/roadmap-csharp"
             />
-          </div>
-        </section>
-
-        <section className="w-full px-4 max-w-6xl mb-12">
-          <h2 className="text-2xl font-semibold mb-6 text-center">Nível Intermediário</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             <Card
-              title="Python (Intermediário)"
-              description="Aprofunde seus conhecimentos com estruturas mais avançadas."
-              linguagem="PythonIntermediario"
-              icon={<FaPython />}
-              link="/roadmap-python-intermediario"
+              title="Javascript"
+              description="Aprenda JavaScript com quizzes interativos e prática real."
+              linguagem="Javascript"
+              icon={<FaJs />}
+              link="/roadmap-javascript"
             />
             <Card
-              title="Java (Intermediário)"
-              description="Explore conceitos como orientação a objetos e frameworks."
-              linguagem="JavaIntermediario"
-              icon={<FaJava />}
-              link="/roadmap-java-intermediario"
-            />
-            <Card
-              title="C# (Intermediário)"
-              description="Aprenda recursos intermediários do C# com exemplos práticos."
-              linguagem="C#Intermediario"
-              icon={<TbBrandCSharp />}
-              link="/roadmap-csharp-intermediario"
-            />
-          </div>
-        </section>
-
-        <section className="w-full px-4 max-w-6xl">
-          <h2 className="text-2xl font-semibold mb-6 text-center">Nível Avançado</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            <Card
-              title="PythonAvancado"
-              description="Domine Python com tópicos como automação, APIs e mais."
-              linguagem="PythonAvancado"
-              icon={<FaPython />}
-              link="/roadmap-python-avancado"
-            />
-            <Card
-              title="Java (Avançado)"
-              description="Torne-se um expert em Java com tópicos avançados e arquitetura."
-              linguagem="JavaAvancado"
-              icon={<FaJava />}
-              link="/roadmap-java-avancado"
-            />
-            <Card
-              title="C# (Avançado)"
-              description="Explore o potencial máximo do C# em projetos robustos."
-              linguagem="C#Avancado"
-              icon={<TbBrandCSharp />}
-              link="/roadmap-csharp-avancado"
+              title="PHP"
+              description="Domine PHP com desafios rápidos e foco no dia a dia do back-end."
+              linguagem="PHP"
+              icon={<FaPhp />}
+              link="/roadmap-php"
             />
           </div>
         </section>
