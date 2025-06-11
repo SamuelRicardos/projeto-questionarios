@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FaHeart, FaCheckCircle, FaTimesCircle, FaArrowRight, FaTrophy, FaSadTear, FaRedo, FaMap } from "react-icons/fa";
+import {
+    FaHeart,
+    FaCheckCircle,
+    FaTimesCircle,
+    FaArrowRight,
+    FaTrophy,
+    FaSadTear,
+    FaRedo,
+    FaMap,
+} from "react-icons/fa";
 import carregamentoGif from "../../assets/carregamento.gif";
 import { useNavigate, useParams } from "react-router-dom";
-import { useLessonStore } from "../../store/licaoStore";
-import { topicosOrdenadosPorLinguagem } from "../../store/licaoStore";
+import { useLessonStore, topicosOrdenadosPorLinguagem } from "../../store/licaoStore";
 
 type Question = {
     questao: string;
@@ -28,7 +36,6 @@ export default function Perguntas() {
     const [gameWon, setGameWon] = useState(false);
     const [fade, setFade] = useState(true);
 
-
     const token = localStorage.getItem("token");
     const userEmail = localStorage.getItem("email");
 
@@ -41,12 +48,14 @@ export default function Perguntas() {
             setSelected(null);
             setAnswered(false);
 
-
-            const response = await axios.get(`http://localhost:8080/api/perguntas/gerar?linguagem=${linguagem}&topico=${topico}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            const response = await axios.get(
+                `http://localhost:8080/api/perguntas/gerar?linguagem=${linguagem}&topico=${topico}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
             setQuestion(response.data);
             setFade(true);
         } catch (err) {
@@ -57,10 +66,7 @@ export default function Perguntas() {
     };
 
     const enviarDesempenho = async (acertou: boolean) => {
-        if (!userEmail || !token) {
-            console.error("Usuário não autenticado ou email não encontrado");
-            return;
-        }
+        if (!userEmail || !token) return;
         try {
             await axios.post(
                 "http://localhost:8080/api/desempenho/atualizar",
@@ -75,7 +81,6 @@ export default function Perguntas() {
                     },
                 }
             );
-            console.log("Desempenho enviado com sucesso!");
         } catch (error) {
             console.error("Erro ao enviar desempenho:", error);
         }
@@ -150,15 +155,15 @@ export default function Perguntas() {
 
     if (loading)
         return (
-            <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-80 z-50">
+            <div className="fixed inset-0 flex items-center justify-center bg-white dark:bg-black bg-opacity-80 z-50">
                 <img src={carregamentoGif} alt="Carregando..." className="w-24 h-24" />
             </div>
         );
 
     if (gameOver || gameWon)
         return (
-            <div className="max-w-xl mx-auto mt-12 p-8 bg-white rounded-3xl text-center space-y-6 animate-fadeIn">
-                <div className="text-3xl font-bold text-gray-800 flex flex-col justify-center items-center gap-2">
+            <div className="max-w-xl mx-auto mt-12 p-8 bg-white dark:bg-zinc-900 rounded-3xl text-center space-y-6 animate-fadeIn">
+                <div className="text-3xl font-bold text-gray-800 dark:text-gray-100 flex flex-col justify-center items-center gap-2">
                     {gameOver ? (
                         <>
                             <FaSadTear className="text-red-400 text-5xl animate-pulse" />
@@ -172,7 +177,7 @@ export default function Perguntas() {
                     )}
                 </div>
 
-                <div className="text-gray-600 text-sm">
+                <div className="text-gray-600 dark:text-gray-300 text-sm">
                     {gameOver
                         ? "Não foi dessa vez, mas você pode tentar novamente!"
                         : "Você está avançando muito bem. Continue assim!"}
@@ -181,14 +186,14 @@ export default function Perguntas() {
                 <div className="flex justify-center gap-4 mt-6">
                     <button
                         onClick={restart}
-                        className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-xl shadow-md hover:bg-green-700 hover:shadow-lg transition-all active:scale-95 cursor-pointer"
+                        className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-xl shadow-md hover:bg-green-700 hover:shadow-lg transition-all active:scale-95"
                     >
                         <FaRedo /> Jogar novamente
                     </button>
 
                     <button
                         onClick={() => navigate(`/roadmap-${linguagem}`)}
-                        className="flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-xl shadow-md hover:bg-purple-700 hover:shadow-lg transition-all active:scale-95 cursor-pointer"
+                        className="flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-xl shadow-md hover:bg-purple-700 hover:shadow-lg transition-all active:scale-95"
                     >
                         <FaMap /> Voltar para o Roadmap
                     </button>
@@ -198,7 +203,7 @@ export default function Perguntas() {
 
     if (!question)
         return (
-            <div className="text-center mt-10 text-gray-600 animate-pulse">
+            <div className="text-center mt-10 text-gray-600 dark:text-gray-300 animate-pulse">
                 Nenhuma pergunta carregada.
             </div>
         );
@@ -207,30 +212,34 @@ export default function Perguntas() {
     const progressPercent = (questionCount / MAX_QUESTIONS) * 100;
 
     return (
-        <div className={`max-w-xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg space-y-6 transition-opacity duration-300 ${fade ? "opacity-100" : "opacity-0"}`}>
+        <div
+            className={`max-w-xl mx-auto mt-10 p-6 rounded-2xl shadow-lg space-y-6 transition-opacity duration-300 ${
+                fade ? "opacity-100" : "opacity-0"
+            } bg-white dark:bg-zinc-900 text-gray-800 dark:text-gray-100`}
+        >
             <div className="flex justify-between items-center mb-4">
                 <div className="flex gap-1">
                     {[...Array(MAX_LIVES)].map((_, i) => (
                         <FaHeart
                             key={i}
-                            className={`text-xl ${i < lives ? "text-red-500" : "text-gray-300"}`}
+                            className={`text-xl ${i < lives ? "text-red-500" : "text-gray-300 dark:text-gray-600"}`}
                         />
                     ))}
                 </div>
-                <div className="text-sm text-gray-500">{linguagem} - Tópico: {topico}</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">{linguagem} - Tópico: {topico}</div>
             </div>
 
-            <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2 overflow-hidden">
+            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mb-2 overflow-hidden">
                 <div
                     className="bg-blue-600 h-2.5 rounded-full transition-all duration-700 ease-in-out"
                     style={{ width: `${progressPercent}%` }}
                 ></div>
             </div>
-            <div className="text-right text-xs text-gray-400">
+            <div className="text-right text-xs text-gray-400 dark:text-gray-300">
                 {questionCount} / {MAX_QUESTIONS}
             </div>
 
-            <h2 className="text-xl font-bold text-gray-800">{question.questao}</h2>
+            <h2 className="text-xl font-bold">{question.questao}</h2>
 
             <div className="space-y-3">
                 {question.opcoes.map((option) => {
@@ -242,15 +251,15 @@ export default function Perguntas() {
 
                     if (answered) {
                         if (isSelected && correct)
-                            style += " bg-green-100 border-green-500 text-green-800 scale-105 shadow-lg";
+                            style += " bg-green-100 dark:bg-green-800 border-green-500 text-green-800 dark:text-green-200 scale-105 shadow-lg";
                         else if (isSelected && !correct)
-                            style += " bg-red-100 border-red-500 text-red-800 scale-105 shadow-lg";
+                            style += " bg-red-100 dark:bg-red-800 border-red-500 text-red-800 dark:text-red-200 scale-105 shadow-lg";
                         else if (correct)
-                            style += " bg-green-50 border-green-300 text-green-700";
+                            style += " bg-green-50 dark:bg-green-900 border-green-300 text-green-700 dark:text-green-300";
                         else
-                            style += " bg-gray-50 border-gray-300 opacity-70";
+                            style += " bg-gray-50 dark:bg-zinc-800 border-gray-300 dark:border-zinc-700 opacity-70";
                     } else {
-                        style += " hover:bg-gray-100 border-gray-300 cursor-pointer";
+                        style += " hover:bg-gray-100 dark:hover:bg-zinc-800 border-gray-300 dark:border-zinc-700 cursor-pointer";
                     }
 
                     return (
@@ -276,13 +285,12 @@ export default function Perguntas() {
             </div>
 
             {answered && !gameOver && !gameWon && (
-                <div className=" flex flex-col items-center space-y-4 animate-fadeIn">
-
+                <div className="flex flex-col items-center space-y-4 animate-fadeIn">
                     {!isCorrect && question.explicacao && (
-                    <div className="mt-4 p-4 bg-gray-100 rounded-lg text-gray-700 text-sm leading-relaxed">
+                        <div className="mt-4 p-4 bg-gray-100 dark:bg-zinc-800 rounded-lg text-gray-700 dark:text-gray-200 text-sm leading-relaxed">
                             <p><strong>Resposta correta: </strong>{question.questaoCorreta}</p>
-                            <p className="text-justify"><strong>Explicação: </strong>{question.explicacao}.</p>
-                    </div>
+                            <p className="text-justify"><strong>Explicação: </strong>{question.explicacao}</p>
+                        </div>
                     )}
 
                     <button
