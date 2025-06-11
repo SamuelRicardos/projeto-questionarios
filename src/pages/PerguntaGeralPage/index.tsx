@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";  // Importa useParams
+import { useNavigate, useParams } from "react-router-dom";
 import { FaHeart, FaCheckCircle, FaTimesCircle, FaArrowRight, FaTrophy, FaSadTear, FaRedo, FaMap } from "react-icons/fa";
 import carregamentoGif from "../../assets/carregamento.gif";
 

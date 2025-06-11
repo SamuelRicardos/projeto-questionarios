@@ -16,8 +16,22 @@ import { RoadmapJS } from "./pages/Roadmap/JS";
 import { RoadmapPHP } from "./pages/Roadmap/php";
 import { PerguntasGerais } from "./pages/Roadmap/PerguntasGerais";
 import { PerguntaGeralPage } from "./pages/PerguntaGeralPage";
+import { useEffect } from "react";
+import { useThemeStore } from "./store/themeStore";
 
 export default function App() {
+
+  const theme = useThemeStore((state) => state.theme);
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+  }, [theme]);
 
   const router = createBrowserRouter([
     {
