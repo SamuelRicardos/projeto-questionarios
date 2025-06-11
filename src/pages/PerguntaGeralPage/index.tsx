@@ -5,12 +5,12 @@ import { FaHeart, FaCheckCircle, FaTimesCircle, FaArrowRight, FaTrophy, FaSadTea
 import carregamentoGif from "../../assets/carregamento.gif";
 
 type Resposta = {
-  questaoCorreta: string;
-  respostaUsuario: string;
-  estaCorreta: boolean;
-  questao: string;
-  opcoes: string[];
-  explicacao?: string;
+    questaoCorreta: string;
+    respostaUsuario: string;
+    estaCorreta: boolean;
+    questao: string;
+    opcoes: string[];
+    explicacao?: string;
 };
 
 export const PerguntaGeralPage = () => {
@@ -19,7 +19,7 @@ export const PerguntaGeralPage = () => {
     const navigate = useNavigate();
 
     const { topico } = useParams<{ topico: string }>();  // Pega o tópico da URL
-
+    const [desempenhoEnviado, setDesempenhoEnviado] = useState(false);
     const [question, setQuestion] = useState<Resposta | null>(null);
     const [selected, setSelected] = useState<string | null>(null);
     const [answered, setAnswered] = useState(false);
@@ -58,6 +58,20 @@ export const PerguntaGeralPage = () => {
         }
     };
 
+    useEffect(() => {
+        if (!desempenhoEnviado) {
+            if (lives <= 0) {
+                setGameOver(true);
+                enviarDesempenho(false);
+                setDesempenhoEnviado(true);
+            } else if (questionCount > MAX_QUESTIONS) {
+                setGameWon(true);
+                enviarDesempenho(true);
+                setDesempenhoEnviado(true);
+            }
+        }
+    }, [lives, questionCount])
+
     const fetchQuestion = async () => {
         if (!topico?.trim()) return;
         try {
@@ -86,26 +100,27 @@ export const PerguntaGeralPage = () => {
 
     useEffect(() => {
         fetchQuestion();
-        // Reset estado ao mudar o tópico (se o usuário digitar outro e voltar para cá)
         setLives(MAX_LIVES);
         setQuestionCount(1);
         setGameOver(false);
         setGameWon(false);
         setSelected(null);
+        setDesempenhoEnviado(false);
         setAnswered(false);
     }, [topico]);
 
-    const handleAnswer = (option: string) => {
-        if (answered || !question || gameOver || gameWon) return;
-        setSelected(option);
-        setAnswered(true);
+const handleAnswer = (option: string) => {
+    if (answered || !question || gameOver || gameWon) return;
 
-        const acertou = option === question.questaoCorreta;
+    setSelected(option);
+    setAnswered(true);
 
-        if (!acertou) setLives((prev) => prev - 1);
+    const acertou = option === question.questaoCorreta;
 
-        enviarDesempenho(acertou);
-    };
+    if (!acertou) {
+        setLives((prev) => prev - 1);
+    }
+};
 
     const nextQuestion = () => {
         if (gameOver || gameWon) return;
@@ -177,7 +192,7 @@ export const PerguntaGeralPage = () => {
                         onClick={() => navigate("/perguntas-gerais")}
                         className="flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-xl shadow-md hover:bg-purple-700 hover:shadow-lg transition-all active:scale-95 cursor-pointer"
                     >
-                        <FaMap /> Voltar para Categorias
+                        <FaMap /> Voltar para tela principal
                     </button>
                 </div>
             </div>
@@ -239,10 +254,10 @@ export const PerguntaGeralPage = () => {
                 <div className=" flex flex-col items-center space-y-4 animate-fadeIn">
 
                     {!isCorrect && question.explicacao && (
-                    <div className="mt-4 p-4 bg-gray-100 rounded-lg text-gray-700 text-sm leading-relaxed">
+                        <div className="mt-4 p-4 bg-gray-100 rounded-lg text-gray-700 text-sm leading-relaxed">
                             <p><strong>Resposta correta: </strong>{question.questaoCorreta}</p>
                             <p className="text-justify"><strong>Explicação: </strong>{question.explicacao}.</p>
-                    </div>
+                        </div>
                     )}
 
                     <button
