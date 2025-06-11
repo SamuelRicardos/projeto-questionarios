@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";  // Importa useParams
 import { FaHeart, FaCheckCircle, FaTimesCircle, FaArrowRight, FaTrophy, FaSadTear, FaRedo, FaMap } from "react-icons/fa";
@@ -18,8 +18,7 @@ export const PerguntaGeralPage = () => {
     const MAX_QUESTIONS = 5;
     const navigate = useNavigate();
 
-    const { topico } = useParams<{ topico: string }>();  // Pega o tópico da URL
-    const [desempenhoEnviado, setDesempenhoEnviado] = useState(false);
+    const { topico } = useParams<{ topico: string }>();
     const [question, setQuestion] = useState<Resposta | null>(null);
     const [selected, setSelected] = useState<string | null>(null);
     const [answered, setAnswered] = useState(false);
@@ -33,7 +32,7 @@ export const PerguntaGeralPage = () => {
     const token = localStorage.getItem("token");
     const userEmail = localStorage.getItem("email");
 
-    const enviarDesempenho = async (acertou: boolean) => {
+    const enviarDesempenho = useCallback(async (acertou: boolean) => {
         if (!userEmail || !token) {
             console.error("Usuário não autenticado ou email não encontrado");
             return;
@@ -56,71 +55,61 @@ export const PerguntaGeralPage = () => {
         } catch (error) {
             console.error("Erro ao enviar desempenho:", error);
         }
-    };
+    }, [userEmail, token, topico]);
 
     useEffect(() => {
-        if (!desempenhoEnviado) {
-            if (lives <= 0) {
-                setGameOver(true);
-                enviarDesempenho(false);
-                setDesempenhoEnviado(true);
-            } else if (questionCount > MAX_QUESTIONS) {
-                setGameWon(true);
-                enviarDesempenho(true);
-                setDesempenhoEnviado(true);
-            }
+        if (lives <= 0 && !gameOver) {
+            setGameOver(true);
+            enviarDesempenho(false);
+        } else if (questionCount > MAX_QUESTIONS && !gameWon) {
+            setGameWon(true);
+            enviarDesempenho(true);
         }
-    }, [lives, questionCount])
+    }, [lives, questionCount, gameOver, gameWon, enviarDesempenho]);
 
-    const fetchQuestion = async () => {
+    const fetchQuestion = useCallback(async () => {
         if (!topico?.trim()) return;
         try {
             setLoading(true);
             setSelected(null);
             setAnswered(false);
+            setFade(true);
 
             const response = await axios.get(`http://localhost:8080/api/perguntas/gerar-geral?topico=${encodeURIComponent(topico)}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
+
             setQuestion(response.data);
-            setFade(true);
         } catch (err) {
             console.error("Erro ao buscar pergunta geral:", err);
         } finally {
             setLoading(false);
         }
-    };
+    }, [topico, token]);
 
     useEffect(() => {
-        if (lives <= 0) setGameOver(true);
-        else if (questionCount > MAX_QUESTIONS) setGameWon(true);
-    }, [lives, questionCount]);
-
-    useEffect(() => {
-        fetchQuestion();
         setLives(MAX_LIVES);
         setQuestionCount(1);
         setGameOver(false);
         setGameWon(false);
         setSelected(null);
-        setDesempenhoEnviado(false);
         setAnswered(false);
-    }, [topico]);
+        setFade(true);
+        fetchQuestion();
+    }, [topico, fetchQuestion]);
 
-const handleAnswer = (option: string) => {
-    if (answered || !question || gameOver || gameWon) return;
+    const handleAnswer = (option: string) => {
+        if (answered || !question || gameOver || gameWon) return;
 
-    setSelected(option);
-    setAnswered(true);
+        setSelected(option);
+        setAnswered(true);
 
-    const acertou = option === question.questaoCorreta;
+        const acertou = option === question.questaoCorreta;
 
-    if (!acertou) {
-        setLives((prev) => prev - 1);
-    }
-};
+        if (!acertou) {
+            setLives((prev) => prev - 1);
+        }
+    };
 
     const nextQuestion = () => {
         if (gameOver || gameWon) return;
