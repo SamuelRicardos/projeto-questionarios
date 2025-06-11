@@ -8,7 +8,7 @@ import { useThemeStore } from "@/store/themeStore";
 
 const icones = {
   bloqueada: <FaLock className="text-gray-400 dark:text-gray-500" />,
-  disponivel: <FaPlay className="text-yellow-500 animate-bounce" />,
+  disponivel: <FaPlay className="text-blue-500 animate-bounce" />,
   concluida: <FaCheckCircle className="text-green-500" />,
 };
 
@@ -32,12 +32,12 @@ export const RoadmapJS = () => {
   };
 
   return (
-    <div className="min-h-screen py-10 px-4 bg-gradient-to-tr from-gray-100 text-gray-800 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 dark:text-white transition-colors duration-300">
+    <div className="min-h-screen py-10 px-4 bg-gradient-to-tr from-gray-100 via-white to-gray-100 text-gray-800 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 dark:text-white transition-colors duration-300">
       <BotaoTema />
       <div className="max-w-5xl mx-auto">
         <h1 className="text-4xl sm:text-5xl font-bold text-center mb-7 tracking-tight">
           Roadmap JavaScript ⚡
-          <span className="block w-20 h-1 bg-yellow-500 mx-auto mt-2 rounded animate-pulse"></span>
+          <span className="block w-20 h-1 bg-blue-500 mx-auto mt-2 rounded animate-pulse"></span>
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -53,8 +53,8 @@ export const RoadmapJS = () => {
                   ${licao.status === "bloqueada"
                     ? "bg-gray-200 border-gray-300 dark:bg-zinc-700/60 dark:border-zinc-600"
                     : licao.status === "disponivel"
-                    ? "bg-yellow-100 border-yellow-400 dark:bg-yellow-600/20 dark:border-yellow-400"
-                    : "bg-green-100 border-green-400 dark:bg-green-600/20 dark:border-green-400"
+                      ? "bg-blue-100 border-blue-400 dark:bg-blue-600/20 dark:border-blue-400"
+                      : "bg-green-100 border-green-400 dark:bg-green-600/20 dark:border-green-400"
                   }
                 `}
               >
@@ -65,7 +65,7 @@ export const RoadmapJS = () => {
 
                 {licao.status === "disponivel" ? (
                   <button
-                    className="cursor-pointer mt-5 px-4 py-2 w-full bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg shadow transition-all"
+                    className="cursor-pointer mt-5 px-4 py-2 w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow transition-all"
                     onClick={() => iniciarTopico(licao.topico)}
                   >
                     Começar
@@ -76,7 +76,7 @@ export const RoadmapJS = () => {
                   </span>
                 )}
 
-                <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-yellow-400 transition duration-300 pointer-events-none"></div>
+                <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-blue-400 transition duration-300 pointer-events-none"></div>
               </motion.div>
             ))
           ) : (
