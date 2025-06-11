@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { BotaoTema } from "../../components/BotaoTema";
 import { Sidebar } from "../../components/Sidebar";
 import { useThemeStore } from "../../store/themeStore";
-import { FaPython, FaJava, FaJs, FaPhp } from "react-icons/fa";
+import { FaPython, FaJava, FaJs, FaPhp, FaQuestionCircle } from "react-icons/fa";
 import { TbBrandCSharp } from "react-icons/tb";
 import { ProgressBar } from "../../components/Progresso";
 
@@ -32,7 +32,7 @@ export const Categorias = () => {
       <div className="flex justify-center mb-4 text-5xl text-blue-500">{icon}</div>
       <h2 className={`text-center text-xl font-semibold mb-2 ${titleClasses}`}>{title}</h2>
       <p className={paragraphClasses}>{description}</p>
-      <ProgressBar linguagem={linguagem} />
+      {linguagem !== "Geral" ? <ProgressBar linguagem={linguagem} /> : null}
     </a>
   );
 
@@ -82,6 +82,13 @@ export const Categorias = () => {
               linguagem="PHP"
               icon={<FaPhp />}
               link="/roadmap-php"
+            />
+            <Card
+              title="Perguntas Gerais"
+              description="Responda perguntas variadas para testar seus conhecimentos gerais."
+              linguagem="Geral"
+              icon={<FaQuestionCircle />}
+              link="/perguntas-gerais"
             />
           </div>
         </section>

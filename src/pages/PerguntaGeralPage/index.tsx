@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";  // Importa useParams
 import { FaHeart, FaCheckCircle, FaTimesCircle, FaArrowRight, FaTrophy, FaSadTear, FaRedo, FaMap } from "react-icons/fa";
 import carregamentoGif from "../../assets/carregamento.gif";
-import { useNavigate, useParams } from "react-router-dom";
-import { useLessonStore } from "../../store/licaoStore";
-import { topicosOrdenadosPorLinguagem } from "../../store/licaoStore";
 
-type Question = {
-    questao: string;
-    opcoes: string[];
-    questaoCorreta: string;
-    explicacao: string;
+type Resposta = {
+  questaoCorreta: string;
+  respostaUsuario: string;
+  estaCorreta: boolean;
+  questao: string;
+  opcoes: string[];
+  explicacao?: string;
 };
 
-export default function Perguntas() {
+export const PerguntaGeralPage = () => {
     const MAX_LIVES = 3;
     const MAX_QUESTIONS = 5;
     const navigate = useNavigate();
 
-    const [question, setQuestion] = useState<Question | null>(null);
+    const { topico } = useParams<{ topico: string }>();  // Pega o tópico da URL
+
+    const [question, setQuestion] = useState<Resposta | null>(null);
     const [selected, setSelected] = useState<string | null>(null);
     const [answered, setAnswered] = useState(false);
     const [lives, setLives] = useState(MAX_LIVES);
@@ -28,33 +30,8 @@ export default function Perguntas() {
     const [gameWon, setGameWon] = useState(false);
     const [fade, setFade] = useState(true);
 
-
     const token = localStorage.getItem("token");
     const userEmail = localStorage.getItem("email");
-
-    const { topico, linguagem } = useParams<{ topico: string; linguagem: string }>();
-    const { desbloquearProxima, concluirLicao } = useLessonStore();
-
-    const fetchQuestion = async () => {
-        try {
-            setLoading(true);
-            setSelected(null);
-            setAnswered(false);
-
-
-            const response = await axios.get(`http://localhost:8080/api/perguntas/gerar?linguagem=${linguagem}&topico=${topico}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            setQuestion(response.data);
-            setFade(true);
-        } catch (err) {
-            console.error("Erro ao buscar pergunta:", err);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const enviarDesempenho = async (acertou: boolean) => {
         if (!userEmail || !token) {
@@ -81,45 +58,53 @@ export default function Perguntas() {
         }
     };
 
-    useEffect(() => {
-        if (gameWon) {
-            enviarDesempenho(true);
-            if (linguagem && topico) {
-                concluirLicao(linguagem, topico);
-                desbloquearProxima(linguagem, topico);
-            }
+    const fetchQuestion = async () => {
+        if (!topico?.trim()) return;
+        try {
+            setLoading(true);
+            setSelected(null);
+            setAnswered(false);
 
-            setTimeout(() => {
-                const proximoTopico = obterProximoTopico(linguagem, topico);
-                if (proximoTopico) {
-                    navigate(`/perguntas/${linguagem}/${proximoTopico}`);
-                } else {
-                    navigate(`/roadmap-${linguagem}`);
-                }
-            }, 1500);
+            const response = await axios.get(`http://localhost:8080/api/perguntas/gerar-geral?topico=${encodeURIComponent(topico)}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setQuestion(response.data);
+            setFade(true);
+        } catch (err) {
+            console.error("Erro ao buscar pergunta geral:", err);
+        } finally {
+            setLoading(false);
         }
-    }, [gameWon]);
-
-    useEffect(() => {
-        if (gameOver) {
-            enviarDesempenho(false);
-        }
-    }, [gameOver]);
-
-    useEffect(() => {
-        fetchQuestion();
-    }, [topico]);
+    };
 
     useEffect(() => {
         if (lives <= 0) setGameOver(true);
         else if (questionCount > MAX_QUESTIONS) setGameWon(true);
     }, [lives, questionCount]);
 
+    useEffect(() => {
+        fetchQuestion();
+        // Reset estado ao mudar o tópico (se o usuário digitar outro e voltar para cá)
+        setLives(MAX_LIVES);
+        setQuestionCount(1);
+        setGameOver(false);
+        setGameWon(false);
+        setSelected(null);
+        setAnswered(false);
+    }, [topico]);
+
     const handleAnswer = (option: string) => {
         if (answered || !question || gameOver || gameWon) return;
         setSelected(option);
         setAnswered(true);
-        if (option !== question.questaoCorreta) setLives((prev) => prev - 1);
+
+        const acertou = option === question.questaoCorreta;
+
+        if (!acertou) setLives((prev) => prev - 1);
+
+        enviarDesempenho(acertou);
     };
 
     const nextQuestion = () => {
@@ -141,21 +126,23 @@ export default function Perguntas() {
         fetchQuestion();
     };
 
-    const obterProximoTopico = (ling: string | undefined, atual: string | undefined): string | null => {
-        if (!ling || !atual) return null;
-        const topicos = topicosOrdenadosPorLinguagem[ling];
-        const idx = topicos.indexOf(atual);
-        return idx !== -1 && idx < topicos.length - 1 ? topicos[idx + 1] : null;
-    };
-
-    if (loading)
+    if (loading) {
         return (
             <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-80 z-50">
                 <img src={carregamentoGif} alt="Carregando..." className="w-24 h-24" />
             </div>
         );
+    }
 
-    if (gameOver || gameWon)
+    if (!question) {
+        return (
+            <div className="max-w-xl mx-auto mt-12 p-6 bg-white rounded-3xl shadow-md text-center space-y-4">
+                <h2 className="text-xl font-bold text-gray-800">Carregando perguntas para: {topico}</h2>
+            </div>
+        );
+    }
+
+    if (gameOver || gameWon) {
         return (
             <div className="max-w-xl mx-auto mt-12 p-8 bg-white rounded-3xl text-center space-y-6 animate-fadeIn">
                 <div className="text-3xl font-bold text-gray-800 flex flex-col justify-center items-center gap-2">
@@ -187,21 +174,15 @@ export default function Perguntas() {
                     </button>
 
                     <button
-                        onClick={() => navigate(`/roadmap-${linguagem}`)}
+                        onClick={() => navigate("/perguntas-gerais")}
                         className="flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-xl shadow-md hover:bg-purple-700 hover:shadow-lg transition-all active:scale-95 cursor-pointer"
                     >
-                        <FaMap /> Voltar para o Roadmap
+                        <FaMap /> Voltar para Categorias
                     </button>
                 </div>
             </div>
         );
-
-    if (!question)
-        return (
-            <div className="text-center mt-10 text-gray-600 animate-pulse">
-                Nenhuma pergunta carregada.
-            </div>
-        );
+    }
 
     const isCorrect = selected === question.questaoCorreta;
     const progressPercent = (questionCount / MAX_QUESTIONS) * 100;
@@ -211,24 +192,16 @@ export default function Perguntas() {
             <div className="flex justify-between items-center mb-4">
                 <div className="flex gap-1">
                     {[...Array(MAX_LIVES)].map((_, i) => (
-                        <FaHeart
-                            key={i}
-                            className={`text-xl ${i < lives ? "text-red-500" : "text-gray-300"}`}
-                        />
+                        <FaHeart key={i} className={`text-xl ${i < lives ? "text-red-500" : "text-gray-300"}`} />
                     ))}
                 </div>
-                <div className="text-sm text-gray-500">{linguagem} - Tópico: {topico}</div>
+                <div className="text-sm text-gray-500">Tópico: {topico}</div>
             </div>
 
             <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2 overflow-hidden">
-                <div
-                    className="bg-blue-600 h-2.5 rounded-full transition-all duration-700 ease-in-out"
-                    style={{ width: `${progressPercent}%` }}
-                ></div>
+                <div className="bg-blue-600 h-2.5 rounded-full transition-all duration-700 ease-in-out" style={{ width: `${progressPercent}%` }}></div>
             </div>
-            <div className="text-right text-xs text-gray-400">
-                {questionCount} / {MAX_QUESTIONS}
-            </div>
+            <div className="text-right text-xs text-gray-400">{questionCount} / {MAX_QUESTIONS}</div>
 
             <h2 className="text-xl font-bold text-gray-800">{question.questao}</h2>
 
@@ -237,39 +210,26 @@ export default function Perguntas() {
                     const isSelected = selected === option;
                     const correct = question.questaoCorreta === option;
 
-                    let style =
-                        "w-full px-4 py-3 rounded-lg border transition-all duration-300 ease-in-out text-left flex justify-between items-center";
+                    let style = "w-full px-4 py-3 rounded-lg border transition-all duration-300 ease-in-out text-left flex justify-between items-center";
 
                     if (answered) {
-                        if (isSelected && correct)
-                            style += " bg-green-100 border-green-500 text-green-800 scale-105 shadow-lg";
-                        else if (isSelected && !correct)
-                            style += " bg-red-100 border-red-500 text-red-800 scale-105 shadow-lg";
-                        else if (correct)
-                            style += " bg-green-50 border-green-300 text-green-700";
-                        else
-                            style += " bg-gray-50 border-gray-300 opacity-70";
+                        if (isSelected && correct) style += " bg-green-100 border-green-500 text-green-800 scale-105 shadow-lg";
+                        else if (isSelected && !correct) style += " bg-red-100 border-red-500 text-red-800 scale-105 shadow-lg";
+                        else if (correct) style += " bg-green-100 border-green-500 text-green-800";
+                        else style += " border-gray-300";
                     } else {
-                        style += " hover:bg-gray-100 border-gray-300 cursor-pointer";
+                        style += " border-gray-300 hover:bg-gray-100 cursor-pointer";
                     }
 
                     return (
                         <button
                             key={option}
-                            className={style}
-                            onClick={() => handleAnswer(option)}
                             disabled={answered}
+                            onClick={() => handleAnswer(option)}
+                            className={style}
                         >
-                            <div className="flex items-center w-full gap-2">
-                                <span className="flex-1 text-left break-words">{option}</span>
-                                {answered && (
-                                    isSelected && !correct ? (
-                                        <FaTimesCircle className="flex-shrink-0 text-red-500 text-xl" />
-                                    ) : correct ? (
-                                        <FaCheckCircle className="flex-shrink-0 text-green-500 text-xl" />
-                                    ) : null
-                                )}
-                            </div>
+                            <span>{option}</span>
+                            {answered && isSelected && (isCorrect ? <FaCheckCircle className="text-green-500" /> : <FaTimesCircle className="text-red-500" />)}
                         </button>
                     );
                 })}
@@ -296,4 +256,4 @@ export default function Perguntas() {
             )}
         </div>
     );
-}
+};

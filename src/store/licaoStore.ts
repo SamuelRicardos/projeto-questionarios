@@ -63,6 +63,7 @@ export const topicosOrdenadosPorLinguagem: Record<string, string[]> = {
     "Funções",
     "Arrays e Superglobais",
   ],
+  gerais: []
 };
 
 export const useLessonStore = create<LessonStore>()(
@@ -114,6 +115,7 @@ export const useLessonStore = create<LessonStore>()(
           { id: 6, titulo: "Funções", status: "bloqueada", topico: "Funções" },
           { id: 7, titulo: "Arrays e Superglobais", status: "bloqueada", topico: "Arrays e Superglobais" },
         ],
+        gerais: []
       },
 
       atualizarStatus: (linguagem, topico, novoStatus) =>

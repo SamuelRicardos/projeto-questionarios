@@ -14,6 +14,8 @@ import { Ranking } from "./pages/Ranking";
 import { ConfigUser } from "./pages/ConfigUser";
 import { RoadmapJS } from "./pages/Roadmap/JS";
 import { RoadmapPHP } from "./pages/Roadmap/php";
+import { PerguntasGerais } from "./pages/Roadmap/PerguntasGerais";
+import { PerguntaGeralPage } from "./pages/PerguntaGeralPage";
 
 export default function App() {
 
@@ -45,6 +47,14 @@ export default function App() {
     {
       path: "/perguntas/:linguagem/:topico",
       element: <Perguntas />
+    },
+    {
+      path: "/perguntas-gerais",
+      element: <PerguntasGerais />
+    },
+    {
+      path: "/perguntas-gerais/:topico",
+      element: <PerguntaGeralPage />
     },
     {
       path: "/roadmap-python",
