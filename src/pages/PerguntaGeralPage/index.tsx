@@ -228,12 +228,20 @@ export const PerguntaGeralPage = () => {
                     return (
                         <button
                             key={option}
-                            disabled={answered}
-                            onClick={() => handleAnswer(option)}
                             className={style}
+                            onClick={() => handleAnswer(option)}
+                            disabled={answered}
                         >
-                            <span>{option}</span>
-                            {answered && isSelected && (isCorrect ? <FaCheckCircle className="text-green-500" /> : <FaTimesCircle className="text-red-500" />)}
+                            <div className="flex items-center w-full gap-2">
+                                <span className="flex-1 text-left break-words">{option}</span>
+                                {answered && (
+                                    isSelected && !correct ? (
+                                        <FaTimesCircle className="flex-shrink-0 text-red-500 text-xl" />
+                                    ) : correct ? (
+                                        <FaCheckCircle className="flex-shrink-0 text-green-500 text-xl" />
+                                    ) : null
+                                )}
+                            </div>
                         </button>
                     );
                 })}
