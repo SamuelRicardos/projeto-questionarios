@@ -62,29 +62,57 @@ export const Sidebar = () => {
 
   return (
     <>
+      {/* Botão hambúrguer fixo no topo, apenas mobile */}
       <button
-        aria-label="Abrir menu"
+        aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
         aria-expanded={isOpen}
         aria-controls="sidebar"
         onClick={toggleSidebar}
-        className={`fixed top-4 left-4 z-50 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-1 ${theme === "dark"
-          ? "bg-gray-800 text-gray-100 focus:ring-blue-400 focus:ring-offset-gray-900"
-          : "bg-white text-gray-800 focus:ring-blue-500 focus:ring-offset-white shadow-md"
-          } md:hidden`}
+        className={`fixed top-4 left-4 z-50 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-1
+          md:hidden
+          ${theme === "dark"
+            ? "bg-gray-800 text-gray-100 focus:ring-blue-400 focus:ring-offset-gray-900"
+            : "bg-white text-gray-800 focus:ring-blue-500 focus:ring-offset-white shadow-md"
+          }
+        `}
       >
         {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
       </button>
+
+      {/* Overlay para fechar o menu clicando fora (apenas mobile) */}
+      {isOpen && (
+        <div
+          onClick={toggleSidebar}
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Sidebar */}
       <aside
         id="sidebar"
         style={{ height: "100vh" }}
-        className="sticky top-0 w-64 border-r shadow-lg
-      bg-white dark:bg-gray-900 dark:border-gray-700 text-gray-800 dark:text-gray-100
-      flex flex-col"
+        className={`
+          fixed top-0 left-0 z-50 w-64 border-r shadow-lg
+          bg-white dark:bg-gray-900 dark:border-gray-700 text-gray-800 dark:text-gray-100
+          flex flex-col
+          transform transition-transform duration-300 ease-in-out
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+          md:translate-x-0 md:static md:shadow-none
+        `}
         aria-label="Sidebar principal"
       >
+        <div className="flex justify-end p-2 md:hidden">
+          <button onClick={toggleSidebar} aria-label="Fechar menu">
+            <FaTimes
+              size={24}
+              className={`${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+            />
+          </button>
+        </div>
 
         <div
-          className={`flex items-center gap-4 p-4 border-b ${theme === "dark" ? "border-gray-700" : "border-gray-200"
+          className={`flex items-center gap-4 p-3 border-b ${theme === "dark" ? "border-gray-700" : "border-gray-200"
             } flex-shrink-0`}
         >
           <div className="w-12 h-12 rounded-full flex items-center justify-center">
@@ -124,8 +152,8 @@ export const Sidebar = () => {
                   }
                 }}
                 className={`flex items-center gap-3 px-4 py-3 rounded-md cursor-pointer transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 ${theme === "dark"
-                    ? "text-gray-300 hover:bg-gray-700 hover:text-white focus:ring-blue-400 focus:ring-offset-gray-900"
-                    : "text-gray-700 hover:bg-blue-100 hover:text-blue-700 focus:ring-blue-500 focus:ring-offset-white"
+                  ? "text-gray-300 hover:bg-gray-700 hover:text-white focus:ring-blue-400 focus:ring-offset-gray-900"
+                  : "text-gray-700 hover:bg-blue-100 hover:text-blue-700 focus:ring-blue-500 focus:ring-offset-white"
                   }`}
               >
                 <span className="text-lg">{icon}</span>
@@ -144,15 +172,6 @@ export const Sidebar = () => {
           © 2025 Projeto Questionários
         </div>
       </aside>
-
-
-      {isOpen && (
-        <div
-          onClick={toggleSidebar}
-          className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
-          aria-hidden="true"
-        />
-      )}
     </>
   );
 };
